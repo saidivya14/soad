@@ -1,0 +1,83 @@
+
+{% extends "blog/base.html" %}
+
+{% block content%}
+<body>
+<div class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0"><a href="index.html"></span> <strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+    </div>
+  </div>
+</div> 
+<h4>
+<div class="row" style="padding-top:50px; padding-left: 85px; padding-right: 85px;">
+  <div class="col-md-12 mb-5">
+    <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
+    <div class="d-flex">
+      <div class="dropdown mr-1 ml-md-auto">
+        <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Category
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Paintings</a>
+          <a class="dropdown-item" href="#">Historic</a>
+          <a class="dropdown-item" href="#">Others</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class=shop1 style="width: 100%;  height: 1000px; padding: 50px;  padding-top:0px; margin: 20px;">
+  <div class="row">
+    {% for post in posts %}
+      <div style="color:black;font-size: 20px;margin: 20px;">
+  
+      <img src="{{ post.image.url }}" height="200px" width="300px" style="margin-bottom: 20px; padding-left: 25px" /> 
+   
+      <center><div style="margin-left:30px">
+        <div>
+          <a href="{% url 'shop-item' post.pk %}" style="color:blue">{{post.title}}</a>
+        </div><br>
+        Current Bid : {{post.minprice}}<br></br>
+        Category : {{post.category}}<br></br>
+        <!--DESCRIPTION : {{item.description}}<br></br>-->
+        <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Bid Now!</button>
+        </div><br></br>
+
+      </div></center>
+       
+      </div>
+    {% endfor %}
+<div class=shop1 style="width: 100%;  height: 300px; padding: 30px;  margin: 5px;">
+  <div class="pagination" style="width: 100%;  height: 60px;">
+  
+  {% if posts.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{posts.previous_page_number}}">Previous</a>
+  {% endif %}
+  
+  {% for num in posts.paginator.page_range %}
+    {% if posts.number == num %}
+      <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>  
+    {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}  
+      <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a> 
+    {% endif %}
+  {% endfor %}
+
+    {% if posts.has_next %}
+      <a class="btn btn-outline-info mb-4" href="?page={{ posts.next_page_number}}">Next</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ posts.paginator.num_pages}}">Last</a>
+    {% endif %}
+
+    </div> 
+
+</div>
+</h4>
+ 
+
+</body>
+{% endblock content %}
