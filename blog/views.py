@@ -14,7 +14,8 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from django.core.paginator import Paginator 
+from django.core.paginator import Paginator
+from django.db.models import Q 
 
 def home(request):
 	return render(request,'blog/home.html')
@@ -62,17 +63,38 @@ def activate(request, uidb64, token):
 		return HttpResponse('Activation link is invalid!')	
 @login_required
 def getmyitems(request):
+	posts = Post.objects.filter(author=request.user.username)
+	paginator = Paginator(posts,6)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
 	context={
-		'items' : Post.objects.filter(author=request.user.username)
+		'items' : posts
 	}
 	return render(request,'blog/myitems.html',context)
 @login_required 
 def shop(request):
 	posts = Post.objects.all()
-	paginator = Paginator(posts,3)
+	paginator = Paginator(posts,6)
 	page = request.GET.get('page')
 	posts = paginator.get_page(page)
-	return render(request,'blog/shop.html',{'posts':posts})	
+	context={
+		'items' : posts
+	}
+	return render(request,'blog/shop.html',context)	
+@login_required
+def search(request):
+	query=request.GET.get('q')
+	if query:
+		results=Post.objects.filter(Q(title__icontains=query)|Q(category__icontains=query))
+	else:
+		results=Post.objects.all()
+	paginator = Paginator(results,6)
+	page = request.GET.get('page')
+	results = paginator.get_page(page)
+	context={
+		'items' : results
+	}
+	return render(request,'blog/shop.html',context)
 @login_required
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)

@@ -24,11 +24,14 @@
     <div class="container-fluid">
       <div class="menu-wrapper">
           <!-- Logo -->
+
         <div class="logo">
           <a href="index.html"><h1 style="color:black;"><span style="color:red;">O</span>rion</h1></a>
         </div>
         <!-- Main-menu -->
+
         <div class="main-menu d-none d-lg-block">
+
           <nav>                                                
             <ul id="navigation">  
               <li><a href="{% url 'blog-home' %}">Home</a></li>
@@ -39,9 +42,18 @@
               <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
           </nav>
+
         </div>
+        <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+              <form method="GET" action="{% url 'search' %}" class="site-block-top-search">
+                <span class="icon icon-search2"></span>
+                <input name="q" value="{{request.GET.q}}" class="form-control border-0" placeholder="Search">
+              </form>
+        </div>
+        
         <!-- Header Right -->
         <div class="header-right">
+
           {% if  user.is_authenticated %}
                 <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                   <div class="site-top-icons">

@@ -21,18 +21,18 @@
         Category
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Paintings</a>
-          <a class="dropdown-item" href="#">Historic</a>
-          <a class="dropdown-item" href="#">Others</a>
+          <a class="dropdown-item" href="http://localhost:8000/results/?q=Paintings">Paintings</a>
+          <a class="dropdown-item" href="http://localhost:8000/results/?q=Historic">Historic</a>
+          <a class="dropdown-item" href="http://localhost:8000/results/?q=Others">Others</a>
         </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class=shop1 style="width: 100%;  height: 1000px; padding: 50px;  padding-top:0px; margin: 20px;">
+<div class=shop1 style="width: 100%;  height: 1300px; padding: 50px;  padding-top:0px; margin: 20px;">
   <div class="row">
-    {% for post in posts %}
+    {% for post in items %}
       <div style="color:black;font-size: 20px;margin: 20px;">
   
       <img src="{{ post.image.url }}" height="200px" width="300px" style="margin-bottom: 20px; padding-left: 25px" /> 
@@ -55,22 +55,22 @@
 <div class=shop1 style="width: 100%;  height: 300px; padding: 30px;  margin: 5px;">
   <div class="pagination" style="width: 100%;  height: 60px;">
   
-  {% if posts.has_previous %}
+  {% if items.has_previous %}
     <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-    <a class="btn btn-outline-info mb-4" href="?page={{posts.previous_page_number}}">Previous</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{items.previous_page_number}}">Previous</a>
   {% endif %}
   
-  {% for num in posts.paginator.page_range %}
-    {% if posts.number == num %}
+  {% for num in items.paginator.page_range %}
+    {% if items.number == num %}
       <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>  
-    {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}  
+    {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
       <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a> 
     {% endif %}
   {% endfor %}
 
-    {% if posts.has_next %}
-      <a class="btn btn-outline-info mb-4" href="?page={{ posts.next_page_number}}">Next</a>
-      <a class="btn btn-outline-info mb-4" href="?page={{ posts.paginator.num_pages}}">Last</a>
+    {% if items.has_next %}
+      <a class="btn btn-outline-info mb-4" href="?page={{ items.next_page_number}}">Next</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ items.paginator.num_pages}}">Last</a>
     {% endif %}
 
     </div> 
