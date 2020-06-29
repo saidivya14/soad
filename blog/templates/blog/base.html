@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>orion</title>
+  <title>Orion</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
@@ -102,7 +102,7 @@
               <ul style="color:white;">
                   <li>630 Gnan Marg, Sri City, Satyavedu Mandal, Chittor dist, Andhra Pradesh, India</li>
                   <li>Phone: +91 9381487445</li>
-                  <li>Email: saidivyagudapati@gmail.com</li>
+                  <li>Email: orionwebsite123@gmail.com</li>
               </ul>
           </div>
       </div>
@@ -110,9 +110,9 @@
             <div class="footer-widget">
                 <h5>Information</h5>
                 <ul>
-                    <li><a href="#">About Us</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
                     <li><a href="#">Checkout</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -120,15 +120,15 @@
             <div class="footer-widget offset-lg-3">
                 <h5>My Account</h5>
                 <ul style="color:white;">
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="{% url 'myitems' %}">Myitems</a></li>
                     <li><a href="#">Shopping Cart</a></li>
-                    <li><a href="#">Shop</a></li>
+                    <li><a href="{% url 'shop' %}">Shop</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-lg-2 offset-lg-1">
             <div class="footer-widget">
-                <h5>My services</h5>
+                <h5>Our services</h5>
                 <ul style="color:white;">
                     <li style="padding-bottom: 10px;">Free Shipping</li>
                     <li style="padding-bottom: 10px;">Free Returns</li>
