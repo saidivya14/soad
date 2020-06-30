@@ -5,7 +5,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm,SellForm
 from django.contrib.auth.decorators import login_required
 from blog.models import Post
-from .forms import UserUpdateForm,ProfileUpdateForm 
+from .forms import UserUpdateForm,ProfileUpdateForm,ContactForm 
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -16,6 +16,9 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator
 from django.db.models import Q 
+from django.conf import settings
+from django.template.loader import get_template
+
 
 def home(request):
 	return render(request,'blog/home.html')
@@ -47,6 +50,52 @@ def  register(request):
 		form=UserRegisterForm()
 
 	return render(request,'blog/register.html',{'form':form})
+from django.core.mail import EmailMessage
+from django.shortcuts import redirect
+from django.template.loader import get_template
+
+# our view
+def contact(request):
+    form_class = ContactForm
+
+    # new logic!
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+
+        if form.is_valid():
+            name = request.POST.get(
+                'name'
+            , '')
+            email = request.POST.get(
+                'email'
+            , '')
+            message = request.POST.get('message', '')
+
+            # Email the profile with the
+            # contact information
+            template = get_template('contact_template.html')
+            context = {
+                'name': name,
+                'email': email,
+                'message': message,
+            }
+            content = template.render(context)
+
+            email = EmailMessage(
+                "New contact form submission",
+                content,
+                "Orion" +'',
+                ['orionwebsite123@gmail.com'],
+                headers = {'Reply-To': email }
+            )
+            email.send()
+            return render(request,'blog/contact1.html')
+        else:
+        	form_class = ContactForm()
+
+    return render(request, 'blog/contact.html', {
+        'form': form_class,
+    })
 def activate(request, uidb64, token):
 	try:
 		uid = force_text(urlsafe_base64_decode(uidb64))
@@ -141,3 +190,5 @@ def get_name(request):
 
 	
 	return render(request, 'blog/sell.html', {'form': form})
+
+

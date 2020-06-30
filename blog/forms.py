@@ -44,4 +44,9 @@ class SellForm(forms.ModelForm):
 			self.save_m2m()
 		return inst
 
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100,required=True)
+    email = forms.EmailField(required=True)
+    message = forms.CharField(required=True,widget=forms.Textarea)
+
 		

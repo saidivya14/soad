@@ -131,6 +131,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'orionwebsite123@gmail.com'
-EMAIL_HOST_PASSWORD = 'hani@2001'
+EMAIL_HOST_PASSWORD = 'testing@321'
 EMAIL_PORT = 587
 
