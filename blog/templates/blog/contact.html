@@ -5,14 +5,63 @@
 {% block content%}
 <body >
     
-     <div style="width:40%;height: 70%;padding-top: 2%;margin-left: 30%;padding-bottom: 3%">
-         <h2>Contact Us</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+    <div class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0"><a href="index.html"></span> <strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Contact</strong></div>
     </div>
+  </div>
+</div>
+
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7"> 
+        <form method="POST"> 
+               {% csrf_token %}
+               <fieldset class="form-group">
+                    <h2 class="border-bottom mb-4">Get In Touch </h2>
+                    {{ form|crispy}}
+               </fieldset>
+               <div class="form-group">
+                     <button class="btn btn-primary btn-lg btn-block" type="submit">Send Message</button>
+               </div>
+         </form>
+       </div>
+       <div class="col-md-5 ml-auto">
+          <div class="contact-widget">
+            <div class="cw-item">
+                <div class="ci-icon">
+                    <i class="fa fa-map-marker"></i>
+                </div>
+                <div class="ci-text">
+                    <span>Address:</span>
+                    <p>60-49 Road 11378 New York</p>
+                </div>
+            </div>
+            <div class="cw-item">
+                <div class="ci-icon">
+                    <i class="fa fa-mobile"></i>
+                </div>
+                <div class="ci-text">
+                    <span>Phone:</span>
+                    <p>+91 9381487445</p>
+                </div>
+            </div>
+            <div class="cw-item">
+                <div class="ci-icon">
+                    <i class="fa fa-envelope"></i>
+                </div>
+                <div class="ci-text">
+                    <span>Email:</span>
+                    <p>orionwebsite123@gmail.com</p>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
   </body>
 
   {% endblock content%}

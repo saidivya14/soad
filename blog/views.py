@@ -50,9 +50,7 @@ def  register(request):
 		form=UserRegisterForm()
 
 	return render(request,'blog/register.html',{'form':form})
-from django.core.mail import EmailMessage
-from django.shortcuts import redirect
-from django.template.loader import get_template
+
 
 # our view
 def contact(request):
