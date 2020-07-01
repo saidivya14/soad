@@ -23,6 +23,7 @@
   </div>
   <div class="column" style="float: left; width: 33.33%;">
     <div class="search-container">
+
      <form method="GET" action="{% url 'search' %}" >
         <input type="text" name="q" value="{{request.GET.q}}" class="form-control border-0" placeholder="What are you looking for?" style="background: lightblue;">
       </form>
