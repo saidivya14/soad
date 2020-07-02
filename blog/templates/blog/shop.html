@@ -14,12 +14,6 @@
 <div class="row" style="padding-top:50px; padding-left: 85px; padding-right: 85px;">
   <div class="column" style="float: left; width: 33.33%;">
     <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
-    <!--<div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-      <form method="GET" action="{% url 'search' %}" class="site-block-top-search">
-        <span class="icon icon-search2"></span>
-        <input name="q" value="{{request.GET.q}}" class="form-control border-0" placeholder="Search">
-      </form>
-    </div>-->
   </div>
   <div class="column" style="float: left; width: 33.33%;">
     <div class="search-container">
@@ -60,9 +54,27 @@
         Current Bid : {{post.minprice}}<br></br>
         Category : {{post.category}}<br></br>
         <!--DESCRIPTION : {{item.description}}<br></br>-->
-        <div class="form-group">
-                <button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Bid Now!</button>
-        </div><br></br>
+        {% if post.is_active %}
+            {% if post.remaining_minutes < 2 %}
+                <div class="auction-card-urgent">Less than {{ post.remaining_minutes }}m</div>
+            {% else %}
+                <div class="auction-card-active">Less than {{ post.remaining_minutes }}m</div>
+            {% endif %}
+            <div class="form-group">
+              <a href="{% url 'shop-item' post.pk %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Bid Now!</button></a>
+            </div><br></br>
+        {% else %}
+        <div class="auction-card-inactive">Expired</div>
+        {% if post.final_value %}
+          <span class="my-auction-status-resolved">
+              Final value: {{ post.final_value }}$
+          </span>
+          {% else %}
+          <span class="my-auction-status-no_winner">
+              No winner
+          </span>
+          {% endif %}
+        {% endif %}
 
       </div></center>
        

@@ -9,30 +9,56 @@
   </div>
 </div>
 {% if my_bids_list %}
-<ul class="my-bid-list">
-    {% for bid in my_bids_list %}
-        <li class="my-bid-li"><a class="my-bid-link" href="{% url 'shop-item' bid.auction.id %}" style="color:blue">{{ bid.auction.title }}</a>
-            <div>
-                <img src="{{ bid.auction.image.url }}" height="200px" width="300px" style="margin-bottom: 20px; padding-left: 25px;"/> 
-            </div>
-            <div class="my-bid-label">
-                My last bid: {{ bid.amount }}$
-                <div class="my-bid-date">({{ bid.date }})</div>
-            </div>
-            {% if bid.auction.is_active %}
-                <div class="my-bid-status-active">Pending</div>
-            {% else %}
-                {% if bid.auction.winner and bid.auction.winner == user %}
-                    <div class="my-bid-status-won">Won for {{ bid.amount }}$</div>
-                {% else %}
-                    <div class="my-bid-status-lost">Lost</div>
-                {% endif %}
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+<div class=shop1 style="width: 100%;  height: 1000px; padding: 50px;  margin: 20px;">
+    <div class="row">
+        <ul class="my-bid-list">
+            {% for bid in my_bids_list %}
+                <li class="my-bid-li"><a class="my-bid-link" href="{% url 'shop-item' bid.auction.id %}" style="color:blue">{{ bid.auction.title }}</a>
+                    <div>
+                        <img src="{{ bid.auction.image.url }}" height="200px" width="300px" style="margin-bottom: 20px; padding-left: 25px;"/> 
+                    </div>
+                    <div class="my-bid-label">
+                        My last bid: {{ bid.amount }}$
+                        <div class="my-bid-date">({{ bid.date }})</div>
+                    </div>
+                    {% if bid.auction.is_active %}
+                        <div class="my-bid-status-active">Pending</div>
+                    {% else %}
+                        {% if bid.auction.winner and bid.auction.winner == user %}
+                            <div class="my-bid-status-won">Won for {{ bid.amount }}$</div>
+                        {% else %}
+                            <div class="my-bid-status-lost">Lost</div>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class=shop1 style="width: 100%;  height: 300px; padding: 30px;  margin: 5px;">
+      <div class="pagination" style="width: 100%;  height: 60px;">
+      
+      {% if items.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{items.previous_page_number}}">Previous</a>
+      {% endif %}
+      
+      {% for num in items.paginator.page_range %}
+        {% if items.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>  
+        {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a> 
+        {% endif %}
+      {% endfor %}
+
+      {% if items.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ items.next_page_number}}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ items.paginator.num_pages}}">Last</a>
+      {% endif %}
+      </div> 
+    </div>
+</div>
 {% else %}
-    <h4>No bids are available.</h4>
+            <h4>No bids are available.</h4>
 {% endif %}
 
 {% endblock %}

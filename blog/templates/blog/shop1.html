@@ -233,7 +233,7 @@
             <div class="wrapper">
               <span class="auction-card">
                 {% if products.is_active %}
-                    {% if products.remaining_minutes < 2 %}
+                    {% if products.remaining_minutes > 0 %}
                         <div class="auction-card-urgent">Less than {{ products.remaining_minutes }}m</div>
                     {% else %}
                         <div class="auction-card-active">Less than {{ products.remaining_minutes }}m</div>

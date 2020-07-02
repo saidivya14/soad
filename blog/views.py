@@ -55,46 +55,46 @@ def  register(request):
 
 # our view
 def contact(request):
-    form_class = ContactForm
+	form_class = ContactForm
 
-    # new logic!
-    if request.method == 'POST':
-        form = form_class(data=request.POST)
+	# new logic!
+	if request.method == 'POST':
+		form = form_class(data=request.POST)
 
-        if form.is_valid():
-            name = request.POST.get(
-                'name'
-            , '')
-            email = request.POST.get(
-                'email'
-            , '')
-            message = request.POST.get('message', '')
+		if form.is_valid():
+			name = request.POST.get(
+				'name'
+			, '')
+			email = request.POST.get(
+				'email'
+			, '')
+			message = request.POST.get('message', '')
 
-            # Email the profile with the
-            # contact information
-            template = get_template('contact_template.html')
-            context = {
-                'name': name,
-                'email': email,
-                'message': message,
-            }
-            content = template.render(context)
+			# Email the profile with the
+			# contact information
+			template = get_template('contact_template.html')
+			context = {
+				'name': name,
+				'email': email,
+				'message': message,
+			}
+			content = template.render(context)
 
-            email = EmailMessage(
-                "New contact form submission",
-                content,
-                "Orion" +'',
-                ['orionwebsite123@gmail.com'],
-                headers = {'Reply-To': email }
-            )
-            email.send()
-            return render(request,'blog/contact1.html')
-        else:
-        	form_class = ContactForm()
+			email = EmailMessage(
+				"New contact form submission",
+				content,
+				"Orion" +'',
+				['orionwebsite123@gmail.com'],
+				headers = {'Reply-To': email }
+			)
+			email.send()
+			return render(request,'blog/contact1.html')
+		else:
+			form_class = ContactForm()
 
-    return render(request, 'blog/contact.html', {
-        'form': form_class,
-    })
+	return render(request, 'blog/contact.html', {
+		'form': form_class,
+	})
 def activate(request, uidb64, token):
 	try:
 		uid = force_text(urlsafe_base64_decode(uidb64))
@@ -105,13 +105,15 @@ def activate(request, uidb64, token):
 		user.is_active = True
 		user.save()
 		login(request, user)
-        # return redirect('home')
+		# return redirect('home')
 		return render(request,'blog/emailverification2.html')
 	else:
 		return HttpResponse('Activation link is invalid!')	
 @login_required
 def getmyitems(request):
-	posts = Post.objects.filter(author=request.user)
+	posts = Post.objects.filter(author=request.user).order_by('-date_added')
+	for a in posts:
+		a.resolve()
 	paginator = Paginator(posts,6)
 	page = request.GET.get('page')
 	posts = paginator.get_page(page)
@@ -122,16 +124,23 @@ def getmyitems(request):
 
 @login_required
 def my_bids(request):
-    # Get all bids by user, sorted by date
-    my_bids_list = Bid.objects.filter(bidder=request.user).order_by('-date')
-    context = {
-        'my_bids_list': my_bids_list,
-    }
-    return render(request,'blog/my_bids.html',context)
+	# Get all bids by user, sorted by date
+	my_bids_list = Bid.objects.filter(bidder=request.user).order_by('-date')
+	for a in my_bids_list:
+		a.auction.resolve()
+	paginator = Paginator(my_bids_list,6)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+	context = {
+		'my_bids_list': my_bids_list,
+	}
+	return render(request,'blog/my_bids.html',context)
 
 @login_required 
 def shop(request):
-	posts = Post.objects.all()
+	posts = Post.objects.all().order_by('-date_added')
+	for a in posts:
+		a.resolve()
 	paginator = Paginator(posts,6)
 	page = request.GET.get('page')
 	posts = paginator.get_page(page)
@@ -146,6 +155,8 @@ def search(request):
 		results=Post.objects.filter(Q(title__icontains=query)|Q(category__icontains=query))
 	else:
 		results=Post.objects.all()
+	for a in results:
+		a.resolve()
 	paginator = Paginator(results,6)
 	page = request.GET.get('page')
 	results = paginator.get_page(page)
@@ -156,6 +167,7 @@ def search(request):
 @login_required
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
+	products.resolve()
 	context={
 		'products' : products
 	}
@@ -182,21 +194,14 @@ def profile(request):
 
 @login_required
 def get_name(request):
-	if request.method == 'POST':
-		
-		form = SellForm(request.POST,request.FILES,author=request.user)
-        
+	if request.method == 'POST':	
+		form = SellForm(request.POST,request.FILES,author=request.user)	
 		if form.is_valid():
 			print("in get_name")
-
 			form.save()
 			return redirect('blog-home')
-
-
 	else :
-
 		form=SellForm(author=request.user)
-
 	
 	return render(request, 'blog/sell.html', {'form': form})
 
@@ -205,33 +210,32 @@ def get_name(request):
 # Bid on some auction
 @login_required
 def bid(request, auction_id):
-    auction = Post.objects.get(pk=auction_id)
-    bid = Bid.objects.filter(bidder=request.user).filter(auction=auction).first()
+	auction = Post.objects.get(pk=auction_id)
+	auction.resolve()
+	bid = Bid.objects.filter(bidder=request.user).filter(auction=auction).first()
 
-    if not auction.is_active:
-        return render(request, 'blog/shop1.html', {
-            'auction': auction,
-            'error_message': "The auction has expired.",
-        })
+	if not auction.is_active:
+		return render(request, 'blog/shop1.html', {
+			'auction': auction,
+		})
 
-    try:
-        bid_amount = request.POST['amount']
-        # Prevent user from entering an empty or invalid bid
-        if not bid_amount or int(bid_amount) < auction.minprice:
-            raise(KeyError)
-        if not bid:
-            # Create new Bid object if it does not exist
-            bid = Bid()
-            bid.auction = auction
-            bid.bidder = request.user
-        bid.amount = bid_amount
-        bid.date = datetime.now(timezone.utc)
-    except (KeyError):
-        # Redisplay the auction details.
-        return render(request, 'blog/shop1.html', {
-            'auction': auction,
-            'error_message': "Invalid bid amount.",
-        })
-    else:
-        bid.save()
-        return render(request, 'blog/my_bids.html')
+	try:
+		bid_amount = request.POST['amount']
+		# Prevent user from entering an empty or invalid bid
+		if not bid_amount or int(bid_amount) < auction.minprice:
+			raise(KeyError)
+		if not bid:
+			# Create new Bid object if it does not exist
+			bid = Bid()
+			bid.auction = auction
+			bid.bidder = request.user
+		bid.amount = bid_amount
+		bid.date = datetime.now(timezone.utc)
+	except (KeyError):
+		# Redisplay the auction details.
+		return render(request, 'blog/shop1.html', {
+			'auction': auction,
+		})
+	else:
+		bid.save()
+		return render(request, 'blog/my_bids.html')

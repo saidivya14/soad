@@ -6,7 +6,7 @@ from math import ceil
 from django.utils import timezone
 
 # Auction duration in minutes
-AUCTION_DURATION = 30
+AUCTION_DURATION = 5
 
 # Create your models here.
 class Profile(models.Model):
@@ -53,7 +53,7 @@ class Post(models.Model):
             # If expired
             if self.has_expired():
                 # Define winner
-                highest_bid = Bid.objects.filter(auction=self).order_by('-amount').order_by('date').first()
+                highest_bid = Bid.objects.filter(auction=self).order_by('-amount').oredr_by('date').first()
                 if highest_bid:
                     self.winner = highest_bid.bidder
                     self.final_value = highest_bid.amount
