@@ -53,7 +53,7 @@ class Post(models.Model):
             # If expired
             if self.has_expired():
                 # Define winner
-                highest_bid = Bid.objects.filter(auction=self).order_by('-amount').order_by('date').first()
+                highest_bid = Bid.objects.filter(auction=self).order_by('-amount').first()
                 if highest_bid:
                     self.winner = highest_bid.bidder
                     self.final_value = highest_bid.amount
