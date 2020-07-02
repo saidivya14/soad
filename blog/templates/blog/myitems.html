@@ -5,7 +5,7 @@
 <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html"><strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">My items</strong></div>
+          <div class="col-md-12 mb-0"><a href="home.html"><strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">My items</strong></div>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
      
         <center><div style="margin-left:30px">
           <div>
-          	<a href="#">{{item.title}}</a>
+          	<a href="{% url 'shop-item' item.pk %}"  style="color:blue">{{item.title}}</a>
           </div><br>
           Current Bid : {{item.minprice}}<br></br>
           Category : {{item.category}}<br></br>

@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0"><a href="home.html"><strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">My bids</strong></div>
+    </div>
+  </div>
+</div>
+{% if my_bids_list %}
+<ul class="my-bid-list">
+    {% for bid in my_bids_list %}
+        <li class="my-bid-li"><a class="my-bid-link" href="{% url 'shop-item' bid.auction.id %}" style="color:blue">{{ bid.auction.title }}</a>
+            <div>
+                <img src="{{ bid.auction.image.url }}" height="200px" width="300px" style="margin-bottom: 20px; padding-left: 25px;"/> 
+            </div>
+            <div class="my-bid-label">
+                My last bid: {{ bid.amount }}$
+                <div class="my-bid-date">({{ bid.date }})</div>
+            </div>
+            {% if bid.auction.is_active %}
+                <div class="my-bid-status-active">Pending</div>
+            {% else %}
+                {% if bid.auction.winner and bid.auction.winner == user %}
+                    <div class="my-bid-status-won">Won for {{ bid.amount }}$</div>
+                {% else %}
+                    <div class="my-bid-status-lost">Lost</div>
+                {% endif %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <h4>No bids are available.</h4>
+{% endif %}
+
+{% endblock %}
