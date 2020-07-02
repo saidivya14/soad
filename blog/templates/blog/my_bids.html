@@ -43,20 +43,20 @@
       
       {% if my_bids_list.has_previous %}
         <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{items.previous_page_number}}">Previous</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{my_bids_list.previous_page_number}}">Previous</a>
       {% endif %}
       
       {% for num in my_bids_list.paginator.page_range %}
-        {% if items.number == num %}
+        {% if my_bids_list.number == num %}
           <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>  
-        {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
+        {% elif num > my_bids_list.number|add:'-3' and num < my_bids_list.number|add:'3' %}  
           <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a> 
         {% endif %}
       {% endfor %}
 
       {% if my_bids_list.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ items.next_page_number}}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ items.paginator.num_pages}}">Last</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ my_bids_list.next_page_number}}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ my_bids_list.paginator.num_pages}}">Last</a>
       {% endif %}
 
       </div> 
