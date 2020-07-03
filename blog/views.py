@@ -125,14 +125,20 @@ def getmyitems(request):
 @login_required
 def my_bids(request):
 	# Get all bids by user, sorted by date
-	my_bids_list = Bid.objects.filter(bidder=request.user).order_by('-date')
-	for a in my_bids_list:
+	posts = Bid.objects.filter(bidder=request.user).order_by('-date')
+	for a in posts:
 		a.auction.resolve()
-	paginator = Paginator(my_bids_list,6)
+	paginator = Paginator(posts,6)
 	page = request.GET.get('page')
+<<<<<<< HEAD
 	my_bids_list = paginator.get_page(page)
 	context = {
 		'my_bids_list': my_bids_list,
+=======
+	posts = paginator.get_page(page)
+	context={
+		'items' : posts
+>>>>>>> origin
 	}
 	return render(request,'blog/my_bids.html',context)
 
