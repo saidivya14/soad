@@ -30,6 +30,9 @@
           {% else %}
               {% if bid.auction.winner and bid.auction.winner == user %}
                   <div class="my-bid-status-won">Won for {{ bid.amount }}$</div>
+                  <div class="form-group">
+              <a href=""><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Buy Now!</button></a>
+            </div><br></br>
               {% else %}
                   <div class="my-bid-status-lost">Lost</div>
               {% endif %}

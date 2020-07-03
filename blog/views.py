@@ -153,7 +153,7 @@ def shop(request):
 	auction_list = Post.objects.all()
 	for a in auction_list:
 		a.resolve()
-	latest_auction_list = auction_list.filter(is_active=True).order_by('date_added')
+	latest_auction_list = auction_list.filter(is_active=True).order_by('-date_added')
 	paginator = Paginator(latest_auction_list,6)
 	page = request.GET.get('page')
 	latest_auction_list = paginator.get_page(page)
@@ -164,9 +164,9 @@ def shop(request):
 def search_auctions(request):
 	query=request.GET.get('q1')
 	if query:
-		results=Post.objects.filter(Q(title__icontains=query)|Q(category__icontains=query))
+		results=Post.objects.filter(Q(title__icontains=query)|Q(category__icontains=query)).order_by('-date_added')
 	else:
-		results=Post.objects.all()
+		results=Post.objects.all().order_by('-date_added')
 	if not results:
 		return render(request,'blog/nosearch.html')
 	for a in results:
@@ -182,9 +182,9 @@ def search_shop(request):
 	query=request.GET.get('q2')
 	if query:
 		posts = Post.objects.all().filter(is_active=True)
-		results=posts.filter(Q(title__icontains=query)|Q(category__icontains=query))
+		results=posts.filter(Q(title__icontains=query)|Q(category__icontains=query)).order_by('-date_added')
 	else:
-		results=Post.objects.all()
+		results=Post.objects.all().filter(is_active=True).order_by('-date_added')
 	if not results:
 		return render(request,'blog/nosearch.html')
 	for a in results:
