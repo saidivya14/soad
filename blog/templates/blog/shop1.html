@@ -193,7 +193,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
                     <h3>{{products.title}}</h3>
-                    <div class="product__details__price">Current bid::₹{{products.minprice}}</div>
+                    <div class="product__details__price">Current bid::₹{{products.currentbid}}</div>
                     <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
                         vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
                         quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
@@ -205,14 +205,13 @@
                             <!-- <form action="/auctions/{{ auction.id }}/bid/" method="post"> -->
                             {% csrf_token %}
                             <div class=\"input_label\" style="text-align: none;">
-                            {% if error_message %}<p class="error" ><strong>{{ error_message }}</strong></p>{% endif %}
                             {% if already_bid %}
-                                <h3> Current bid: {{ products.current_bid }} </h3>
+                                <h3> Current bid: {{ products.currentbid }} </h3>
                             {% endif %}
                             <span>Enter amount ($):</span>
                             <span class="required_field" >*</span>
                             <span><input class="textbox" type="text" class="input_box" name="amount">
-                            <br></span><span><a><input class="submit_button" type="submit" class="submit_button" value="Bid"></a>
+                            </span><span><a><input class="submit_button" type="submit" class="submit_button" value="Bid"></a>
                             </form>
                             <br></span></div>
                             <!-- </div> -->

@@ -201,7 +201,6 @@ def search_shop(request):
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
 	products.resolve()
-	products.currentbid()
 	context={
 		'products' : products
 	}
