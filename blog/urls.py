@@ -6,5 +6,6 @@ urlpatterns = [
 	url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',views.activate, name='activate'),
     path('contact', views.contact,name='contact'),
     path('about',views.about,name='about'),
-    url(r'^results/$',views.search,name='search'),
+    url(r'^results-auctions/$',views.search_auctions,name='search_auctions'),
+    url(r'^results-shop/$',views.search_shop,name='search_shop'),
 ]

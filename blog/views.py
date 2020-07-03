@@ -130,20 +130,14 @@ def my_bids(request):
 		a.auction.resolve()
 	paginator = Paginator(posts,6)
 	page = request.GET.get('page')
-<<<<<<< HEAD
 	my_bids_list = paginator.get_page(page)
 	context = {
 		'my_bids_list': my_bids_list,
-=======
-	posts = paginator.get_page(page)
-	context={
-		'items' : posts
->>>>>>> origin
 	}
 	return render(request,'blog/my_bids.html',context)
 
 @login_required 
-def shop(request):
+def auctions(request):
 	posts = Post.objects.all().order_by('-date_added')
 	for a in posts:
 		a.resolve()
@@ -153,8 +147,9 @@ def shop(request):
 	context={
 		'items' : posts
 	}
-	return render(request,'blog/shop.html',context)
-def index(request):
+	return render(request,'blog/auctions.html',context)
+@login_required 	
+def shop(request):
 	auction_list = Post.objects.all()
 	for a in auction_list:
 		a.resolve()
@@ -166,13 +161,32 @@ def index(request):
 		'items' : latest_auction_list
 	}
 	return render(request,'blog/shop.html',context)	
-@login_required
-def search(request):
-	query=request.GET.get('q')
+def search_auctions(request):
+	query=request.GET.get('q1')
 	if query:
 		results=Post.objects.filter(Q(title__icontains=query)|Q(category__icontains=query))
 	else:
 		results=Post.objects.all()
+	if not results:
+		return render(request,'blog/nosearch.html')
+	for a in results:
+		a.resolve()
+	paginator = Paginator(results,6)
+	page = request.GET.get('page')
+	results = paginator.get_page(page)
+	context={
+		'items' : results
+	}
+	return render(request,'blog/auctions.html',context)
+def search_shop(request):
+	query=request.GET.get('q2')
+	if query:
+		posts = Post.objects.all().filter(is_active=True)
+		results=posts.filter(Q(title__icontains=query)|Q(category__icontains=query))
+	else:
+		results=Post.objects.all()
+	if not results:
+		return render(request,'blog/nosearch.html')
 	for a in results:
 		a.resolve()
 	paginator = Paginator(results,6)
@@ -182,6 +196,7 @@ def search(request):
 		'items' : results
 	}
 	return render(request,'blog/shop.html',context)
+
 @login_required
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
