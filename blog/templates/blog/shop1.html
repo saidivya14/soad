@@ -39,8 +39,8 @@
 
 .product__details__text ul {
   border-top: 1px solid #ebebeb;
-  padding-top: 40px;
-  margin-top: 50px;
+  padding-top: 10px;
+  margin-top: 10px;
 }
 
 .product__details__text ul li {
@@ -107,7 +107,7 @@
     display: inline-block;
     flex: 1 0 21%;
     border-radius: 12px;
-    padding: 20px;
+    padding: 5px;
     margin: 6px;
     /* width: 20%; */
     /* height: 30%; */
@@ -197,52 +197,47 @@
                     <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
                         vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
                         quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
-                    <label for="email">Enter Amount:</label>
-                    <input type="text">
-                    <input type="submit">
+                    <div class="wrapper">
+                        {% if not own_auction %}
+                            {% if products.is_active %}
+                            <!-- <div class="bid_box"> -->
+                            <form action="{% url 'bid' products.id %}" method="post">
+                            <!-- <form action="/auctions/{{ auction.id }}/bid/" method="post"> -->
+                            {% csrf_token %}
+                            <div class=\"input_label\" style="text-align: none;">
+                            {% if error_message %}<p class="error" ><strong>{{ error_message }}</strong></p>{% endif %}
+                            {% if already_bid %}
+                                <h3> Current bid: {{ products.current_bid }} </h3>
+                            {% endif %}
+                            <span>Enter amount ($):</span>
+                            <span class="required_field" >*</span>
+                            <span><input class="textbox" type="text" class="input_box" name="amount">
+                            <br></span><span><a><input class="submit_button" type="submit" class="submit_button" value="Bid"></a>
+                            </form>
+                            <br></span></div>
+                            <!-- </div> -->
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="wrapper">
+                      <span class="auction-card">
+                        {% if products.is_active %}
+                            {% if products.remaining_minutes > 0 %}
+                                <div class="auction-card-urgent">Less than {{ products.remaining_minutes }}m</div>
+                            {% else %}
+                                <div class="auction-card-active">Less than {{ products.remaining_minutes }}m</div>
+                            {% endif %}
+                        {% else %}
+                        <div class="auction-card-inactive">Expired</div>
+                        {% endif %}
+                        <div class="auction-card-value">{{ products.minprice }}$</div>
+                      </span>
+                    </div>
                     <ul>
                         <li><b>Availability</b> <span>In Stock</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                     </ul>
                 </div>
-            </div>
-            <div class="wrapper">
-                {% if not own_auction %}
-                    {% if products.is_active %}
-                    <!-- <div class="bid_box"> -->
-                    <form action="{% url 'bid' products.id %}" method="post">
-                    <!-- <form action="/auctions/{{ auction.id }}/bid/" method="post"> -->
-                    {% csrf_token %}
-                    <div class=\"input_label\">
-                    {% if error_message %}<p class="error" ><strong>{{ error_message }}</strong></p>{% endif %}
-                    {% if already_bid %}
-                        <h3> Current bid: {{ bid_amount }} </h3>
-                    {% endif %}
-                    <span>Enter amount ($):</span>
-                    <span class="required_field" >*</span>
-                    </div>
-                    <input class="textbox" type="text" class="input_box" name="amount">
-                    <br>
-                    <a><input class="submit_button" type="submit" class="submit_button" value="Bid"></a>
-                    </form>
-                    <br>
-                    <!-- </div> -->
-                    {% endif %}
-                {% endif %}
-            </div>
-            <div class="wrapper">
-              <span class="auction-card">
-                {% if products.is_active %}
-                    {% if products.remaining_minutes > 0 %}
-                        <div class="auction-card-urgent">Less than {{ products.remaining_minutes }}m</div>
-                    {% else %}
-                        <div class="auction-card-active">Less than {{ products.remaining_minutes }}m</div>
-                    {% endif %}
-                {% else %}
-                <div class="auction-card-inactive">Expired</div>
-                {% endif %}
-                <div class="auction-card-value">{{ products.minprice }}$</div>
-              </span>
             </div>
       
         </div>

@@ -32,7 +32,8 @@ urlpatterns = [
     path('<int:auction_id>/bid/', blog_views.bid, name='bid'),
     path('myitems/',blog_views.getmyitems,name='myitems'),
     path('mybids/',blog_views.my_bids,name='my_bids'),
-    path('shop/',blog_views.shop,name='shop'),
+    path('shop/',blog_views.shop,name='all-auctions'),
+    path('index/',blog_views.index,name='shop'),
     path('shop/item/<int:pid>', blog_views.shop_item, name='shop-item'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(

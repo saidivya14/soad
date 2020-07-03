@@ -130,7 +130,7 @@ def my_bids(request):
 		a.auction.resolve()
 	paginator = Paginator(my_bids_list,6)
 	page = request.GET.get('page')
-	posts = paginator.get_page(page)
+	my_bids_list = paginator.get_page(page)
 	context = {
 		'my_bids_list': my_bids_list,
 	}
@@ -146,6 +146,18 @@ def shop(request):
 	posts = paginator.get_page(page)
 	context={
 		'items' : posts
+	}
+	return render(request,'blog/shop.html',context)
+def index(request):
+	auction_list = Post.objects.all()
+	for a in auction_list:
+		a.resolve()
+	latest_auction_list = auction_list.filter(is_active=True).order_by('date_added')
+	paginator = Paginator(latest_auction_list,6)
+	page = request.GET.get('page')
+	latest_auction_list = paginator.get_page(page)
+	context={
+		'items' : latest_auction_list
 	}
 	return render(request,'blog/shop.html',context)	
 @login_required
@@ -168,6 +180,7 @@ def search(request):
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
 	products.resolve()
+	products.currentbid()
 	context={
 		'products' : products
 	}

@@ -6,7 +6,7 @@ from math import ceil
 from django.utils import timezone
 
 # Auction duration in minutes
-AUCTION_DURATION = 5
+AUCTION_DURATION = 30
 
 # Create your models here.
 class Profile(models.Model):
@@ -47,6 +47,7 @@ class Post(models.Model):
                                related_name="auction_winner",
                                related_query_name="auction_winner")
     final_value = models.IntegerField(blank=True, null=True)
+    current_bid = models.IntegerField(blank=True, null=True)
 
     def resolve(self):
         if self.is_active:
@@ -69,6 +70,9 @@ class Post(models.Model):
         else:
             return False
 
+    def currentbid(self):
+        highest_bid = Bid.objects.filter(auction=self).order_by('-amount').first()
+        self.current_bid = highest_bid.amount
     # Returns the ceiling of remaining_time in minutes
     @property
     def remaining_minutes(self):
