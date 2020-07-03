@@ -51,7 +51,7 @@
         <div>
           <a href="{% url 'shop-item' post.pk %}" style="color:blue">{{post.title}}</a>
         </div><br>
-        Current Bid : {{post.minprice}}<br></br>
+        Current Bid : {{post.currentbid}}<br></br>
         Category : {{post.category}}<br></br>
         <!--DESCRIPTION : {{item.description}}<br></br>-->
         {% if post.is_active %}

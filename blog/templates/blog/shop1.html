@@ -206,7 +206,7 @@
                             {% csrf_token %}
                             <div class=\"input_label\" style="text-align: none;">
                             {% if already_bid %}
-                                <h3> Current bid: {{ products.currentbid }} </h3>
+                                <h2> your last bid on this product: ₹{{ products.currentbid }}</h2>
                             {% endif %}
                             <span>Enter amount ($):</span>
                             <span class="required_field" >*</span>

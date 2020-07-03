@@ -201,10 +201,18 @@ def search_shop(request):
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
 	products.resolve()
-	context={
-		'products' : products
-	}
-	return render(request,'blog/shop1.html',context)
+	already_bid = False
+	if request.user.is_authenticated:
+		if products.author == request.user:
+			own_auction = True
+			return render(request, 'blog/shop1.html', {'products': products, 'own_auction': own_auction})
+
+		user_bid = Bid.objects.filter(bidder=request.user).filter(auction=products).first()
+		if user_bid:
+			already_bid = True
+			bid_amount = user_bid.amount
+			return render(request, 'blog/shop1.html', {'products': products, 'already_bid': already_bid, 'bid_amount': bid_amount})
+	return render(request,'blog/shop1.html',{'products' : products, 'already_bid': already_bid})
 @login_required
 def profile(request):
 	if request.method== 'POST':

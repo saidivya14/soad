@@ -70,10 +70,9 @@ class Post(models.Model):
             return False
 
     def currentbid(self):
-        if self.is_active:
-            highest_bid = Bid.objects.filter(auction=self).order_by('-amount').first()
-            if highest_bid:
-                return(highest_bid.amount)
+        highest_bid = Bid.objects.filter(auction=self).order_by('-amount').first()
+        if highest_bid:
+            return(highest_bid.amount)
     # Returns the ceiling of remaining_time in minutes
     @property
     def remaining_minutes(self):

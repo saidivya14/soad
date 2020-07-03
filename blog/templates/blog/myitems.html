@@ -22,7 +22,7 @@
           <div>
           	<a href="{% url 'shop-item' item.pk %}"  style="color:blue">{{item.title}}</a>
           </div><br>
-          Current Bid : {{item.minprice}}<br></br>
+          Current Bid : {{item.currentbid}}<br></br>
           Category : {{item.category}}<br></br>
           <!--DESCRIPTION : {{item.description}}<br></br>-->
           {% if item.is_active %}

@@ -22,7 +22,7 @@
           <div>
             <a href="{% url 'shop-item' bid.auction.pk %}"  style="color:blue">{{ bid.auction.title }}</a>
           </div><br>
-          Current Bid : {{ bid.auction.minprice }}<br></br>
+          Current Bid : {{ bid.auction.currentbid }}<br></br>
           Category : {{ bid.auction.category }}<br></br>
           <!--DESCRIPTION : {{item.description}}<br></br>-->
           {% if bid.auction.is_active %}
