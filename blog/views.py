@@ -168,7 +168,7 @@ def search_auctions(request):
 	else:
 		results=Post.objects.all()
 	if not results:
-		return render(request,'blog/nosearch.html')
+		return render(request,'blog/nosearch_auctions.html')
 	for a in results:
 		a.resolve()
 	paginator = Paginator(results,6)
@@ -186,7 +186,7 @@ def search_shop(request):
 	else:
 		results=Post.objects.all()
 	if not results:
-		return render(request,'blog/nosearch.html')
+		return render(request,'blog/nosearch_shop.html')
 	for a in results:
 		a.resolve()
 	paginator = Paginator(results,6)

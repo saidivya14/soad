@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0"><a href="{% url 'blog-home' %}"></span> <strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+    </div>
+  </div>
+</div> 
+<div class="row" style="padding-top:50px; padding-left: 85px; padding-right: 85px;">
+  <div class="column" style="float: left; width: 33.33%;">
+    <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
+  </div>
+  <div class="column" style="float: left; width: 33.33%;">
+    <div class="search-container">
+
+     <form method="GET" action="{% url 'search_shop' %}" >
+        <input type="text" name="q2" value="{{request.GET.q2}}" class="form-control border-0" placeholder="What are you looking for?" style="background: lightblue;">
+      </form>
+    </div>
+  </div>
+  <div class="column" style="float: left; width: 33.33%;">
+    <div class="d-flex">
+      <div class="dropdown mr-1 ml-md-auto">
+        <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Category
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Paintings">Paintings</a>
+          <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Historic">Historic</a>
+          <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Others">Others</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class=con style="height:240px;padding-top: 30px">
+    <div class="alert alert-info">
+        Oops! Not Found!
+    </div>
+ </div>
+{% endblock content %}

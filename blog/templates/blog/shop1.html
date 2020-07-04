@@ -3,7 +3,8 @@
 
 <style type="text/css">
 .product-details {
-  padding-top: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .product__details__pic__item {
@@ -17,18 +18,14 @@
 .product__details__text h3 {
   color: #252525;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 9px;
 }
 
 .product__details__text .product__details__price {
-  font-size: 30px;
+  font-size: 15px;
   color: #dd2222;
   font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.product__details__text p {
-  margin-bottom: 45px;
+  margin-bottom: 3px;
 }
 
 .product__details__text .primary-btn {
@@ -193,7 +190,9 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
                     <h3>{{products.title}}</h3>
-                    <div class="product__details__price">Current bid::₹{{products.currentbid}}</div>
+                    <div class="product__details__price">Original amount :: ₹{{products.minprice}}</div>
+                    <div class="product__details__price">Current bid :: ₹{{products.currentbid}}</div>
+                    <div class="product__details__price">No.of bids :: {{products.no_of_bids}}</div>
                     <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
                         vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
                         quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
@@ -206,7 +205,7 @@
                             {% csrf_token %}
                             <div class=\"input_label\" style="text-align: none;">
                             {% if already_bid %}
-                                <h2> your last bid on this product: ₹{{ products.currentbid }}</h2>
+                                <p class="product__details__price"> your last bid on this product: ₹{{ products.currentbid }}</p>
                             {% endif %}
                             <span>Enter amount ($):</span>
                             <span class="required_field" >*</span>

@@ -5,8 +5,8 @@ from datetime import timedelta, datetime, timezone
 from math import ceil
 from django.utils import timezone
 
-# Auction duration in minutes
-AUCTION_DURATION = 30
+# Auction duration in hours
+AUCTION_DURATION = 180
 
 # Create your models here.
 class Profile(models.Model):
@@ -34,7 +34,7 @@ class Post(models.Model):
         ('Others', 'Others'),
     )
     title= models.CharField(max_length=300, unique=True)
-    minprice= models.FloatField()
+    minprice= models.IntegerField()
     image=models.ImageField(blank='True',upload_to='items/')
     category=models.CharField(max_length=300, choices=CATEGORY)
     description= models.TextField()
@@ -68,11 +68,17 @@ class Post(models.Model):
             return True
         else:
             return False
-
+    #returns current highest bid
     def currentbid(self):
         highest_bid = Bid.objects.filter(auction=self).order_by('-amount').first()
         if highest_bid:
             return(highest_bid.amount)
+
+    def no_of_bids(self):
+        no_of_bids = Bid.objects.filter(auction=self).count()
+        if no_of_bids:
+            return(no_of_bids)
+
     # Returns the ceiling of remaining_time in minutes
     @property
     def remaining_minutes(self):
