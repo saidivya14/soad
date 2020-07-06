@@ -29,8 +29,9 @@ def prohome(request):
 	return render(request,'blog/home.html')
 def contact(request):
 	return render(request,'blog/contact.html')
-def checkout(request):
-	return render(request,'blog/checkout.html')
+def checkout(request,bid_id):
+	bid = Bid.objects.get(pk=bid_id)
+	return render(request,'blog/checkout.html',{'bid':bid,})
 def register(request):
 	if request.method== 'POST':
 		form=UserRegisterForm(request.POST)
@@ -204,12 +205,11 @@ def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
 	products.resolve()
 	posts = Bid.objects.filter(bidder=request.user).filter(auction=products).first()
-	posts.auction.resolve()
 	already_bid = False
 	if request.user.is_authenticated:
 		if products.author == request.user:
 			own_auction = True
-			return render(request, 'blog/shop1.html', {'products': products, 'own_auction': own_auction,'my_bids_list': my_bids_list,})
+			return render(request, 'blog/shop1.html', {'products': products, 'own_auction': own_auction,'bid': posts,})
 
 		user_bid = Bid.objects.filter(bidder=request.user).filter(auction=products).first()
 		if user_bid:

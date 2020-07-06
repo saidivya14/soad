@@ -6,7 +6,7 @@ from math import ceil
 from django.utils import timezone
 
 # Auction duration in hours
-AUCTION_DURATION = 2
+AUCTION_DURATION = 3
 
 # Create your models here.
 class Profile(models.Model):
