@@ -33,6 +33,7 @@ urlpatterns = [
     path('myitems/',blog_views.getmyitems,name='myitems'),
     path('mybids/',blog_views.my_bids,name='my_bids'),
     path('auctions/',blog_views.auctions,name='all-auctions'),
+    path('checkout/',blog_views.checkout,name='checkout'),
     path('shop/',blog_views.shop,name='shop'),
     path('shop/item/<int:pid>', blog_views.shop_item, name='shop-item'),
     path('password-reset/',

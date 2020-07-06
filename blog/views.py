@@ -29,7 +29,9 @@ def prohome(request):
 	return render(request,'blog/home.html')
 def contact(request):
 	return render(request,'blog/contact.html')
-def  register(request):
+def checkout(request):
+	return render(request,'blog/checkout.html')
+def register(request):
 	if request.method== 'POST':
 		form=UserRegisterForm(request.POST)
 		if form.is_valid():
@@ -201,18 +203,20 @@ def search_shop(request):
 def shop_item(request,pid):
 	products = Post.objects.get(pk=pid)
 	products.resolve()
+	posts = Bid.objects.filter(bidder=request.user).filter(auction=products).first()
+	posts.auction.resolve()
 	already_bid = False
 	if request.user.is_authenticated:
 		if products.author == request.user:
 			own_auction = True
-			return render(request, 'blog/shop1.html', {'products': products, 'own_auction': own_auction})
+			return render(request, 'blog/shop1.html', {'products': products, 'own_auction': own_auction,'my_bids_list': my_bids_list,})
 
 		user_bid = Bid.objects.filter(bidder=request.user).filter(auction=products).first()
 		if user_bid:
 			already_bid = True
 			bid_amount = user_bid.amount
-			return render(request, 'blog/shop1.html', {'products': products, 'already_bid': already_bid, 'bid_amount': bid_amount})
-	return render(request,'blog/shop1.html',{'products' : products, 'already_bid': already_bid})
+			return render(request, 'blog/shop1.html', {'products': products, 'already_bid': already_bid, 'bid_amount': bid_amount,'bid': posts,})
+	return render(request,'blog/shop1.html',{'products' : products, 'already_bid': already_bid,'bid': posts,})
 @login_required
 def profile(request):
 	if request.method== 'POST':

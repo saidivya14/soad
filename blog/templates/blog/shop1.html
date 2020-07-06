@@ -104,8 +104,6 @@
     display: inline-block;
     flex: 1 0 21%;
     border-radius: 12px;
-    padding: 5px;
-    margin: 6px;
     /* width: 20%; */
     /* height: 30%; */
     width: 260px;
@@ -226,9 +224,17 @@
                                 <div class="auction-card-active">Less than {{ products.remaining_minutes }}m</div>
                             {% endif %}
                         {% else %}
-                        <div class="auction-card-inactive">Expired</div>
+                          <div class="auction-card-inactive">Expired</div>
+                          {% if bid.auction.winner and bid.auction.winner == user %}
+                              <div class="auction-card-value">Won for {{ bid.amount }}$</div>
+                              <div class="auction-card-value">Get paid before 2days after won bidding else it will expire.</div>
+                              <div class="form-group">
+                                <a href="{% url 'checkout' %}"><button class="btn btn-outline-info" style ="background-color: #008CBA; " type="submit">Buy Now!</button></a>
+                                </div>
+                          {% else %}
+                              <div class="auction-card-value">Lost</div>
+                          {% endif %}
                         {% endif %}
-                        <div class="auction-card-value">{{ products.minprice }}$</div>
                       </span>
                     </div>
                     <ul>
