@@ -48,4 +48,12 @@ class ContactForm(forms.Form):
     email = forms.EmailField(required=True)
     message = forms.CharField(required=True,widget=forms.Textarea)
 
+class AddressForm(forms.Form):
+	name = forms.CharField(max_length=100,required=True)
+	street=forms.CharField(max_length=100,required=True)
+	city = forms.CharField(max_length=100,required=True)
+	state = forms.CharField(max_length=100,required=True)
+	pincode = forms.CharField(max_length=10,required=True)
+	country = forms.CharField(max_length=100,required=True)
+	phone = forms.CharField(max_length=10,required=True)
 		

@@ -30,12 +30,12 @@
                     Pending
                 </span>
                 <span class="my-auction-value">
-                    {{ item.minprice }}$
+                    Rs.{{ item.minprice }}
                 </span>
             {% else %}
                 {% if item.final_value %}
                 <span class="my-auction-status-resolved">
-                    Final value: {{ item.final_value }}$
+                    Final value: Rs.{{ item.final_value }}
                 </span>
                 {% else %}
                 <span class="my-auction-status-no_winner">

@@ -96,10 +96,14 @@ class Bid(models.Model):
     auction = models.ForeignKey(Post, on_delete=models.CASCADE)
     amount = models.IntegerField()
     # is_cancelled = models.BooleanField(default=False)
-    date = models.DateTimeField('when the bid was made')   
-    
+    date = models.DateTimeField('when the bid was made') 
 
+class Order(models.Model):
+    product = models.ForeignKey(Post, max_length=200, null=True, blank=True, on_delete = models.SET_NULL)
+    created =  models.DateTimeField(auto_now_add=True) 
 
+    def __str__(self):
+        return self.product.name
 
     
 

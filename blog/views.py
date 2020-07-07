@@ -5,7 +5,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm,SellForm
 from django.contrib.auth.decorators import login_required
 from blog.models import Post,Bid
-from .forms import UserUpdateForm,ProfileUpdateForm,ContactForm 
+from .forms import UserUpdateForm,ProfileUpdateForm,ContactForm,AddressForm
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -20,6 +20,8 @@ from django.conf import settings
 from django.template.loader import get_template
 from datetime import datetime, timezone
 from django.urls import reverse
+import stripe
+stripe.api_key = "sk_test_51H0rNqD5fba9rsNuuXZqKUJlFtWrvxVLV7PkZZKMM8nwB7AXnEHHid6pCBWZFztSVUp40634OT2R9rkDCJCA0uJY00hSmmEOsF"
 
 def home(request):
 	return render(request,'blog/home.html')
@@ -27,11 +29,33 @@ def about(request):
 	return render(request,'blog/about.html')
 def prohome(request):
 	return render(request,'blog/home.html')
-def contact(request):
-	return render(request,'blog/contact.html')
-def checkout(request,bid_id):
-	bid = Bid.objects.get(pk=bid_id)
-	return render(request,'blog/checkout.html',{'bid':bid,})
+def stripecheck(request,pk):
+	product = Post.objects.get(id=pk)
+	context = {'product':product}
+	return render(request,'blog/stripecheck.html',context)
+def charge(request,args):
+
+	amount=args
+	if request.method == 'POST':
+		print('Data:', request.POST)
+
+		customer = stripe.Customer.create(
+			email=request.POST['email'],
+			name=request.POST['name'],
+			source=request.POST['stripeToken']
+			)
+		charge = stripe.Charge.create(
+			customer=customer,
+			amount=amount*100,
+			currency='inr',
+			description="Orion payment"
+			)
+
+	return redirect(reverse('success'))
+
+
+def successMsg(request):
+	return render(request, 'blog/success.html')
 def register(request):
 	if request.method== 'POST':
 		form=UserRegisterForm(request.POST)
@@ -96,6 +120,45 @@ def contact(request):
 			form_class = ContactForm()
 
 	return render(request, 'blog/contact.html', {
+		'form': form_class,
+	})
+
+def address(request,pk):
+	product = Post.objects.get(id=pk)
+	form_class = AddressForm
+
+	# new logic!
+	if request.method == 'POST':
+		form = form_class(data=request.POST)
+
+		if form.is_valid():
+			country = request.POST.get(
+				'country'
+			, '')
+			name = request.POST.get(
+				'name'
+			, '')
+			street = request.POST.get('street', '')
+			city = request.POST.get('city', '')
+			state = request.POST.get('state', '')
+			pincode = request.POST.get('pincode', '')
+			phone = request.POST.get('phone', '')
+
+			context = {
+				'country':country,
+				'name': name,
+				'street': street,
+				'city': city,
+				'state':state,
+				'pincode':pincode,
+				'phone':phone,
+				'product':product
+			}
+			return render(request,'blog/address_template.html',context)
+		else:
+			form_class = ContactForm()
+
+	return render(request, 'blog/checkout.html', {
 		'form': form_class,
 	})
 def activate(request, uidb64, token):
