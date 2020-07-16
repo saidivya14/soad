@@ -14,10 +14,33 @@
   <div style="width:40%;height: 70%;padding-top: 2%;margin-left: 30%;padding-bottom: 3%">
       <form method="POST" enctype="multipart/form-data"> 
             {% csrf_token %}
-            <fieldset class="form-group">
+            <!--<fieldset class="form-group">
                  <h2 class="border-bottom mb-4">UPLOAD YOUR ITEM HERE </h2>
                  {{ form|crispy}}
             </fieldset>
+            DECLARE @First datetime
+            DECLARE @Second datetime
+            SET @First = '04/02/2008 05:23:22'
+            SET @Second = getdate()
+
+            SELECT DATEDIFF(day,@First,@Second)*24 as TotalHours,
+            DATEDIFF(day,@First,@Second)*24*60 as TotalMinutes,
+            DATEDIFF(day,@First,@Second)*24*60*60 as TotalSeconds-->
+            <div id="div_id_title" class="form-group">
+              <label for="id_title" class=" requiredField">
+                                  Title
+              <span class="asteriskField">*</span>
+              </label>
+              <div class>
+              <input class="textinput textInput form-control form-control" required id="id_title" maxlength="300" name="title" type="text">
+              </div>
+            </div>
+            {{ form.minprice|as_crispy_field }}
+            {{ form.image|as_crispy_field }}
+            {{ form.category|as_crispy_field }}
+            {{ form.description|as_crispy_field }}
+            {{ form.starttime|as_crispy_field }}
+            {{ form.endtime|as_crispy_field }}
             <div class="form-group">
                   <button class="btn btn-outline-info" type="submit">Upload</button>
             </div>

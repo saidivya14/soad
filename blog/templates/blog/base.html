@@ -37,8 +37,13 @@
             <ul id="navigation">  
               <li><a href="{% url 'blog-home' %}">Home</a></li>
               <li><a href="{% url 'about' %}">about</a></li>
-              <li><a href="{% url 'all-auctions' %}">All auctions</a></li>
-              <li><a href="{% url 'shop' %}">shop</a></li>
+              <li><a href="#">Auctions</a>
+                <ul class="submenu">
+                    <li><a href="{% url 'upcoming-auctions' %}"> Upcoming Auctions</a></li>
+                    <li><a href="{% url 'shop' %}"> Ongoing Auctions</a></li>
+                    <li><a href="{% url 'all-auctions' %}">Expired Auctions</a></li>
+                </ul>
+              </li>
               <li><a href="{% url 'sell' %}">Sell</a></li>
               <li><a href="{% url 'myitems' %}">My items</a></li>
               <li><a href="{% url 'my_bids' %}">My bids</a></li>
@@ -50,18 +55,16 @@
         
         <!-- Header Right -->
         <div class="header-right">
-
           {% if  user.is_authenticated %}
-                <div class="col-6 col-md-4 order-3 order-md-3 text-right">
-                  <div class="site-top-icons">
-                    <ul>
-                      <li ><a href="{% url 'profile'%}"><span class="icon icon-person"></span></a></li>
-                      <li><a href="" class="site-cart"><span class="icon icon-shopping_cart"></span></a></li> 
-                      <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
-                      <li><a href="{% url 'logout'%}" style="color:black;">Logout&nbsp&nbsp&nbsp&nbsp</a></li>
-                    </ul>
-                  </div> 
-                </div>
+            <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+              <div class="site-top-icons">
+                <ul>
+                  <li ><a href="{% url 'profile'%}"><span class="icon icon-person"></span></a></li>
+                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                  <li><a href="{% url 'logout'%}" style="color:black;">Logout&nbsp&nbsp&nbsp&nbsp</a></li>
+                </ul>
+              </div> 
+            </div>
             {% else %}
                 <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                   <div class="container">
@@ -145,8 +148,6 @@
 <script src="{% static 'blog/js/jquery.magnific-popup.min.js' %}"></script>
 <script src="{% static 'blog/js/aos.js' %}"></script>
 <script src="{% static 'blog/js/main.js' %}"></script>
-<script src="{% static 'blog/js/price-range.js' %}"></script>
-<script src="{% static 'blog/js/script1.js' %}"></script>
 
 </body>
 </html>

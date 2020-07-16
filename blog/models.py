@@ -2,11 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from datetime import timedelta, datetime, timezone
-from math import ceil
+from math import ceil,floor
 from django.utils import timezone
+from django.db.models.functions import (
+         ExtractDay, ExtractHour, ExtractMinute, ExtractMonth, ExtractSecond, ExtractYear,
+    )
 
-# Auction duration in hours
-AUCTION_DURATION = 3
+# Auction duration in minutes
+AUCTION_DURATION = 120
 
 # Create your models here.
 class Profile(models.Model):
@@ -40,7 +43,10 @@ class Post(models.Model):
     description= models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateTimeField(default=timezone.now)
-    is_active = models.BooleanField(default=True)
+    starttime = models.DateTimeField(default=timezone.now)
+    endtime = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=False)
+    is_exp = models.BooleanField(default=False)
     winner = models.ForeignKey(User, on_delete=models.SET("(deleted)"),
                                blank=True,
                                null=True,
@@ -49,21 +55,29 @@ class Post(models.Model):
     final_value = models.IntegerField(blank=True, null=True)
 
     def resolve(self):
-        if self.is_active:
+        now = datetime.now(timezone.utc)
+        if self.starttime<=now and now<=self.endtime:      
+            self.is_active=True
+            self.is_exp=False
+            self.save()
             # If expired
+        if self.is_active:
+            
             if self.has_expired():
                 # Define winner
+                
                 highest_bid = Bid.objects.filter(auction=self).order_by('-amount').first()
                 if highest_bid:
                     self.winner = highest_bid.bidder
                     self.final_value = highest_bid.amount
                 self.is_active = False
+                self.is_exp=True
                 self.save()
-
+        
     # Helper function that determines if the auction has expired
     def has_expired(self):
         now = datetime.now(timezone.utc)
-        expiration = self.date_added + timedelta(minutes=AUCTION_DURATION)
+        expiration = self.endtime
         if now > expiration:
             return True
         else:
@@ -79,14 +93,52 @@ class Post(models.Model):
         if no_of_bids:
             return(no_of_bids)
 
+    def remaining_seconds(self):
+        if self.is_active:
+            now = datetime.now(timezone.utc)
+            minutes_remaining = self.endtime - now
+            minutes = divmod(minutes_remaining.seconds,60)
+            minu = minutes[1]
+            return(minu)
+        else:
+            return(0)
     # Returns the ceiling of remaining_time in minutes
     @property
     def remaining_minutes(self):
         if self.is_active:
             now = datetime.now(timezone.utc)
-            expiration = self.date_added + timedelta(minutes=AUCTION_DURATION)
-            minutes_remaining = ceil((expiration - now).total_seconds() / 60)
-            return(minutes_remaining)
+            minutes_remaining = self.endtime - now
+            minutes = divmod(minutes_remaining.seconds,60)
+            minu1 = minutes[0]
+            min1=divmod(minu1,60)
+            minu = min1[1]
+            return(minu)
+        else:
+            return(0)
+
+    def remaining_hours(self):
+        if self.is_active:
+            now = datetime.now(timezone.utc)
+            minutes_remaining = self.endtime - now
+            minutes = divmod(minutes_remaining.seconds,60)
+            minu1 = minutes[0]
+            min1=divmod(minu1,60)
+            minu = min1[0]
+            return(minu)
+        else:
+            return(0)
+
+    def remaining_days(self):
+        if self.is_active:
+            now = datetime.now(timezone.utc)
+            minutes_remaining = self.endtime - now
+            minutes = divmod(minutes_remaining.seconds,60)
+            minu1 = minutes[0]
+            min1 = divmod(minu1,60)
+            min2 = min1[0]
+            min3 = divmod(min2,24)
+            minu = min3[0]
+            return(minu)
         else:
             return(0)
 

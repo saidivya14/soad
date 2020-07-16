@@ -191,10 +191,10 @@ def getmyitems(request):
 @login_required
 def my_bids(request):
 	# Get all bids by user, sorted by date
-	posts = Bid.objects.filter(bidder=request.user).order_by('-date')
-	for a in posts:
+	my_bids_list = Bid.objects.filter(bidder=request.user).order_by('-date')
+	for a in my_bids_list:
 		a.auction.resolve()
-	paginator = Paginator(posts,6)
+	paginator = Paginator(my_bids_list,6)
 	page = request.GET.get('page')
 	my_bids_list = paginator.get_page(page)
 	context = {
@@ -207,11 +207,12 @@ def auctions(request):
 	posts = Post.objects.all().order_by('-date_added')
 	for a in posts:
 		a.resolve()
-	paginator = Paginator(posts,6)
+	latest_auction_list = posts.filter(is_exp=True).order_by('-date_added')
+	paginator = Paginator(latest_auction_list,6)
 	page = request.GET.get('page')
-	posts = paginator.get_page(page)
+	latest_auction_list = paginator.get_page(page)
 	context={
-		'items' : posts
+		'items' : latest_auction_list
 	}
 	return render(request,'blog/auctions.html',context)
 @login_required 	
@@ -227,6 +228,19 @@ def shop(request):
 		'items' : latest_auction_list
 	}
 	return render(request,'blog/shop.html',context)	
+@login_required
+def upauctions(request):
+	auction_list = Post.objects.all()
+	for a in auction_list:
+		a.resolve()
+	latest_auction_list = auction_list.filter(is_active=False).filter(is_exp=False).order_by('-date_added')
+	paginator = Paginator(latest_auction_list,6)
+	page = request.GET.get('page')
+	latest_auction_list = paginator.get_page(page)
+	context={
+		'items' : latest_auction_list
+	}
+	return render(request,'blog/shop.html',context)
 def search_auctions(request):
 	query=request.GET.get('q1')
 	if query:
@@ -346,4 +360,13 @@ def bid(request, auction_id):
 		})
 	else:
 		bid.save()
-		return render(request, 'blog/my_bids.html')
+		my_bids_list = Bid.objects.filter(bidder=request.user).order_by('-date')
+		for a in my_bids_list:
+			a.auction.resolve()
+		paginator = Paginator(my_bids_list,6)
+		page = request.GET.get('page')
+		my_bids_list = paginator.get_page(page)
+		context = {
+			'my_bids_list': my_bids_list,
+		}
+		return render(request,'blog/my_bids.html',context)
