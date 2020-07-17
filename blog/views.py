@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm,SellForm
 from django.contrib.auth.decorators import login_required
-from blog.models import Post,Bid
+from blog.models import Post,Bid,Order
 from .forms import UserUpdateForm,ProfileUpdateForm,ContactForm,AddressForm
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
@@ -33,12 +33,12 @@ def stripecheck(request,pk):
 	product = Post.objects.get(id=pk)
 	context = {'product':product}
 	return render(request,'blog/stripecheck.html',context)
-def charge(request,args):
-
-	amount=args
+def charge(request,pk):
+	product = Post.objects.get(id=pk)
+	amount=product.final_value
 	if request.method == 'POST':
 		print('Data:', request.POST)
-
+		username=request.POST['name']
 		customer = stripe.Customer.create(
 			email=request.POST['email'],
 			name=request.POST['name'],
@@ -51,8 +51,8 @@ def charge(request,args):
 			description="Orion payment"
 			)
 
+	Order.objects.create(product=product,username=username)
 	return redirect(reverse('success'))
-
 
 def successMsg(request):
 	return render(request, 'blog/success.html')
@@ -187,6 +187,16 @@ def getmyitems(request):
 		'items' : posts
 	}
 	return render(request,'blog/myitems.html',context)
+@login_required
+def getmyorders(request):
+	posts = Order.objects.filter(username=request.user)
+	paginator = Paginator(posts,6)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+	context={
+		'items' : posts
+	}
+	return render(request,'blog/myorders.html',context)
 
 @login_required
 def my_bids(request):

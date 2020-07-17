@@ -152,10 +152,11 @@ class Bid(models.Model):
 
 class Order(models.Model):
     product = models.ForeignKey(Post, max_length=200, null=True, blank=True, on_delete = models.SET_NULL)
+    username = models.CharField(max_length=300,null=True, unique=True)
     created =  models.DateTimeField(auto_now_add=True) 
 
     def __str__(self):
-        return self.product.name
+        return self.product.title
 
     
 

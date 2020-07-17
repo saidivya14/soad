@@ -43,14 +43,14 @@
 
 	<div class="container">
 				<h2 class="border-bottom mb-4">Payment </h2>
-				<form action="{% url 'charge' product.final_value %}" method="post" id="payment-form">
+				<form action="{% url 'charge' product.id %}" method="post" id="payment-form">
 					{% csrf_token %}
 					<div class="form-field-6">
 						<input required type="text" name="email" placeholder="Your Email">
 					</div>
 
 					<div class="form-field-6">
-						<input required type="text" name="name" placeholder="Your Name">
+						<input required type="text" name="name" placeholder="Your Username">
 					</div>
 
 				  <div class="form-row">
