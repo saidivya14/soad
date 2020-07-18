@@ -56,20 +56,27 @@
         <div>
           <a href="{% url 'shop-item' post.pk %}" style="color:blue">{{post.title}}</a>
         </div><br>
-        Current Bid : {{post.currentbid}}<br>
-        Category : {{post.category}}<br>
-        Start time: {{post.starttime}}<br>
-        End time: {{post.endtime}}<br>
+        {% if post.is_active %}
+          Current Bid : {{post.currentbid}}<br>
+          Category : {{post.category}}<br>
+        {% else %}
+          Category : {{post.category}}<br>
+          Start time: {{post.starttime}}<br>
+          End time: {{post.endtime}}<br>
+        {% endif %}
         <!--DESCRIPTION : {{item.description}}<br></br>-->
         {% if post.is_active %}
             {% if post.remaining_days == 0 %}
               {% if post.remaining_hours == 0 %}
-                <div>Remaining Time::{{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
+                <div>Remaining Time::</div>
+                <div>{{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
               {% else %}
-                <div>Remaining Time::{{post.remaining_hours}}hrs {{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
+                <div>Remaining Time::</div>
+                <div>{{post.remaining_hours}}hrs {{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
               {% endif %}
             {% else %}
-              <div>Remaining Time::{{post.remaining_days}}days {{post.remaining_hours}}hrs {{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
+              <div>Remaining Time::</div>
+              <div>{{post.remaining_days}}days {{post.remaining_hours}}hrs {{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
             {% endif %}  
             <div class="form-group">
               <a href="{% url 'shop-item' post.pk %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Bid Now!</button></a>

@@ -31,7 +31,11 @@
               {% if bid.auction.winner and bid.auction.winner == user %}
                   <div class="my-bid-status-won">Won for Rs.{{ bid.amount }}</div>
                   <div class="form-group">
-              <a href="{% url 'address' bid.auction.id %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Buy Now!</button></a>
+                  {% if bid.auction.is_paid %}
+                    <div>Paid</div>
+                  {% else %}
+                    <a href="{% url 'address' bid.auction.id %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Buy Now!</button></a>
+                  {% endif %}
             </div><br></br>
               {% else %}
                   <div class="my-bid-status-lost">Lost</div>

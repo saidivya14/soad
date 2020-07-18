@@ -3,8 +3,16 @@
 <html>
 <head>
   <title>Orion</title>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+  <link rel="stylesheet" href="{% static 'blog/fonts/icomoon/style.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/jquery-ui.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+  <link rel="stylesheet" href="{% static 'blog/css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
   <!-- Landing page styling -->
   <style type="text/css">
 
@@ -240,8 +248,84 @@
   </style>
 </head>
 <body>
+  <header>
+  <!-- Header Start -->
+  <div class="header-area">
+    <div class="main-header header-sticky">
+      <div class="container-fluid">
+        <div class="menu-wrapper">
+            <!-- Logo -->
+
+          <div class="logo">
+            <a style="text-decoration:none; " href="index.html"><h1 style="color:black;"><span style="color:red;">O</span>rion</h1></a>
+          </div>
+          <!-- Main-menu -->
+
+          <div class="main-menu d-none d-lg-block">
+
+            <nav>                                                
+              <ul id="navigation">  
+                <li><a style="text-decoration:none; " href="{% url 'blog-home' %}">Home</a></li>
+                <li><a style="text-decoration:none; " href="{% url 'about' %}">about</a></li>
+                <li><a style="text-decoration:none; " href="#">Auctions</a>
+                  <ul class="submenu">
+                      <li><a style="text-decoration:none; " href="{% url 'upcoming-auctions' %}"> Upcoming Auctions</a></li>
+                      <li><a style="text-decoration:none; " href="{% url 'shop' %}"> Ongoing Auctions</a></li>
+                      <li><a style="text-decoration:none; " href="{% url 'all-auctions' %}">Expired Auctions</a></li>
+                  </ul>
+                </li>
+                <li><a style="text-decoration:none; " href="{% url 'sell' %}">Sell</a></li>
+                <li><a style="text-decoration:none; " href="{% url 'myitems' %}">My items</a></li>
+                <li><a style="text-decoration:none; " href="{% url 'my_bids' %}">My bids</a></li>
+                <li><a style="text-decoration:none; " href="{% url 'contact' %}">Contact</a></li>
+              </ul>
+            </nav>
+
+          </div>
+          
+          <!-- Header Right -->
+          <div class="header-right">
+            {% if  user.is_authenticated %}
+              <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                <div class="site-top-icons">
+                  <ul>
+                    <li ><a href="{% url 'profile'%}"><span class="fa fa-user"></span></a></li>
+                    <li ><a href="{% url 'myorders'%}"><span class="fa fa-shopping-bag"></span></a></li>
+                    <li ><a href="{% url 'logout'%}"><span class="fa fa-sign-out"></span></a></li>
+                  </ul>
+                </div> 
+
+              </div>
+              {% else %}
+                  <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                    <div class="container">
+                      <ul>
+                        <li><a href="{% url 'login'%}" style="color:black">Login&nbsp&nbsp&nbsp&nbsp</a></li>
+                        <li><a href="{% url 'blog-register'%}" style="color:black">Register</a></li>
+                      </ul>
+                    </div>
+                  </div>
+              {% endif %}
+          </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="col-12">
+            <div class="mobile_menu d-block d-lg-none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Header End -->
+  </header>
   {% block content %}
 
   {% endblock content %}
+  <script src="{% static 'blog/js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'blog/js/jquery-ui.js' %}"></script>
+  <script src="{% static 'blog/js/popper.min.js' %}"></script>
+  <script src="{% static 'blog/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'blog/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'blog/js/aos.js' %}"></script>
+  <script src="{% static 'blog/js/main.js' %}"></script>
 </body>
 </html>

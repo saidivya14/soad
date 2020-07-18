@@ -38,10 +38,8 @@ def charge(request,pk):
 	amount=product.final_value
 	if request.method == 'POST':
 		print('Data:', request.POST)
-		username=request.POST['name']
 		customer = stripe.Customer.create(
 			email=request.POST['email'],
-			name=request.POST['name'],
 			source=request.POST['stripeToken']
 			)
 		charge = stripe.Charge.create(
@@ -50,8 +48,8 @@ def charge(request,pk):
 			currency='inr',
 			description="Orion payment"
 			)
-
-	Order.objects.create(product=product,username=username)
+	product.ispaid()
+	Order.objects.create(product=product,username=product.winner)
 	return redirect(reverse('success'))
 
 def successMsg(request):
@@ -190,6 +188,8 @@ def getmyitems(request):
 @login_required
 def getmyorders(request):
 	posts = Order.objects.filter(username=request.user)
+	for a in posts:
+		a.product.resolve()
 	paginator = Paginator(posts,6)
 	page = request.GET.get('page')
 	posts = paginator.get_page(page)
@@ -336,9 +336,7 @@ def get_name(request):
 		form=SellForm(author=request.user)
 	
 	return render(request, 'blog/sell.html', {'form': form})
-
-
-  
+ 
 # Bid on some auction
 @login_required
 def bid(request, auction_id):

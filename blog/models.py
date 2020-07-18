@@ -4,12 +4,6 @@ from PIL import Image
 from datetime import timedelta, datetime, timezone
 from math import ceil,floor
 from django.utils import timezone
-from django.db.models.functions import (
-         ExtractDay, ExtractHour, ExtractMinute, ExtractMonth, ExtractSecond, ExtractYear,
-    )
-
-# Auction duration in minutes
-AUCTION_DURATION = 120
 
 # Create your models here.
 class Profile(models.Model):
@@ -41,12 +35,14 @@ class Post(models.Model):
     image=models.ImageField(blank='True',upload_to='items/')
     category=models.CharField(max_length=300, choices=CATEGORY)
     description= models.TextField()
+    comments = models.TextField(blank=True,null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateTimeField(default=timezone.now)
-    starttime = models.DateTimeField(default=timezone.now)
-    endtime = models.DateTimeField(default=timezone.now)
+    starttime = models.DateTimeField(default=(datetime.now()+timedelta(days=1)))
+    endtime = models.DateTimeField(default=(datetime.now()+timedelta(days=1)))
     is_active = models.BooleanField(default=False)
     is_exp = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
     winner = models.ForeignKey(User, on_delete=models.SET("(deleted)"),
                                blank=True,
                                null=True,
@@ -73,6 +69,10 @@ class Post(models.Model):
                 self.is_active = False
                 self.is_exp=True
                 self.save()
+        
+    def ispaid(self):
+        self.is_paid = True
+        self.save()
         
     # Helper function that determines if the auction has expired
     def has_expired(self):
@@ -142,6 +142,43 @@ class Post(models.Model):
         else:
             return(0)
 
+    def seconds_left(self):
+        now = datetime.now(timezone.utc)
+        minutes_remaining = self.starttime - now
+        minutes = divmod(minutes_remaining.seconds,60)
+        minu = minutes[1]
+        return(minu)
+    
+    def minutes_left(self):
+        now = datetime.now(timezone.utc)
+        minutes_remaining = self.starttime - now
+        minutes = divmod(minutes_remaining.seconds,60)
+        minu1 = minutes[0]
+        min1=divmod(minu1,60)
+        minu = min1[1]
+        return(minu)
+
+    def hours_left(self):
+        now = datetime.now(timezone.utc)
+        minutes_remaining = self.starttime - now
+        minutes = divmod(minutes_remaining.seconds,60)
+        minu1 = minutes[0]
+        min1=divmod(minu1,60)
+        minu = min1[0]
+        return(minu)
+
+    def days_left(self):
+        now = datetime.now(timezone.utc)
+        minutes_remaining = self.starttime - now
+        minutes = divmod(minutes_remaining.seconds,60)
+        minu1 = minutes[0]
+        min1 = divmod(minu1,60)
+        min2 = min1[0]
+        min3 = divmod(min2,24)
+        minu = min3[0]
+        return(minu)
+        
+
 
 class Bid(models.Model):
     bidder = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -151,8 +188,8 @@ class Bid(models.Model):
     date = models.DateTimeField('when the bid was made') 
 
 class Order(models.Model):
-    product = models.ForeignKey(Post, max_length=200, null=True, blank=True, on_delete = models.SET_NULL)
-    username = models.CharField(max_length=300,null=True, unique=True)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Post, on_delete=models.CASCADE)
     created =  models.DateTimeField(auto_now_add=True) 
 
     def __str__(self):

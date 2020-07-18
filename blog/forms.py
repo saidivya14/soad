@@ -26,7 +26,7 @@ class SellForm(forms.ModelForm):
 	
 	class Meta:
 		model=Post
-		fields=['title','minprice','image','category','description','starttime','endtime']
+		fields=['title','minprice','image','category','description','endtime','comments']
 		
 
 
