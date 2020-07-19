@@ -280,6 +280,115 @@ def shop(request):
 		'items' : latest_auction_list
 	}
 	return render(request,'blog/shop.html',context)	
+
+def pricerange1(request):
+	auction_list = Post.objects.filter(is_active=True).filter(minprice__range=(0,10000))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/shop.html',context)	
+
+def pricerange2(request):
+	auction_list = Post.objects.filter(is_active=True).filter(minprice__range=(10001,100001))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/shop.html',context)	
+
+def pricerange3(request):
+	auction_list = Post.objects.filter(is_active=True).filter(minprice__range=(100001,1000001))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/shop.html',context)	
+
+def pricerange4(request):
+	auction_list = Post.objects.filter(is_exp=True).filter(minprice__range=(0,10000))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/auctions.html',context)	
+
+def pricerange5(request):
+	auction_list = Post.objects.filter(is_exp=True).filter(minprice__range=(10001,100001))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/auctions.html',context)	
+
+def pricerange6(request):
+	auction_list = Post.objects.filter(is_exp=True).filter(minprice__range=(100001,1000001))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/auctions.html',context)	
+
+def pricerange7(request):
+	auction_list = Post.objects.filter(is_active=False).filter(is_exp=False).filter(minprice__range=(0,10000))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/upcoming_auctions.html',context)	
+
+def pricerange8(request):
+	auction_list = Post.objects.filter(is_active=False).filter(is_exp=False).filter(minprice__range=(10001,100001))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/upcoming_auctions.html',context)	
+
+def pricerange9(request):
+	auction_list = Post.objects.filter(is_active=False).filter(is_exp=False).filter(minprice__range=(100001,1000001))
+	for a in auction_list:
+		a.resolve()
+	paginator = Paginator(auction_list,6)
+	page = request.GET.get('page')
+	auction_list = paginator.get_page(page)
+	context={
+		'items' : auction_list
+	}
+	return render(request,'blog/upcoming_auctions.html',context)	
+
 @login_required
 def upauctions(request):
 	auction_list = Post.objects.all()
