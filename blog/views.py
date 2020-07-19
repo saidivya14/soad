@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm,SellForm
 from django.contrib.auth.decorators import login_required
-from blog.models import Post,Bid,Order
+from blog.models import Post,Bid,Order,Wishlist
 from .forms import UserUpdateForm,ProfileUpdateForm,ContactForm,AddressForm
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
@@ -54,6 +54,7 @@ def charge(request,pk):
 
 def successMsg(request):
 	return render(request, 'blog/success.html')
+	
 def register(request):
 	if request.method== 'POST':
 		form=UserRegisterForm(request.POST)
@@ -173,6 +174,47 @@ def activate(request, uidb64, token):
 		return render(request,'blog/emailverification2.html')
 	else:
 		return HttpResponse('Activation link is invalid!')	
+
+def my_wishlist(request):
+	posts = Wishlist.objects.filter(username=request.user)
+	for a in posts:
+		a.product.resolve()
+	paginator = Paginator(posts,6)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+	context={
+		'items' : posts
+	}
+	return render(request,'blog/my_wishlist.html',context)
+
+def add_to_wishlist(request,pid):
+	product = Post.objects.get(pk=pid)
+	Wishlist.objects.create(product=product,username=request.user)
+	posts = Wishlist.objects.filter(username=request.user)
+	for a in posts:
+		a.product.resolve()
+	paginator = Paginator(posts,6)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+	context={
+		'items' : posts
+	}
+	return render(request,'blog/my_wishlist.html',context)
+
+def delete_from_wishlist(request,pid):
+	product = Wishlist.objects.get(pk=pid)
+	product.delete()
+	posts = Wishlist.objects.filter(username=request.user)
+	for a in posts:
+		a.product.resolve()
+	paginator = Paginator(posts,6)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+	context={
+		'items' : posts
+	}
+	return render(request,'blog/my_wishlist.html',context)
+
 @login_required
 def getmyitems(request):
 	posts = Post.objects.filter(author=request.user).order_by('-date_added')
@@ -250,7 +292,7 @@ def upauctions(request):
 	context={
 		'items' : latest_auction_list
 	}
-	return render(request,'blog/shop.html',context)
+	return render(request,'blog/upcoming_auctions.html',context)
 def search_auctions(request):
 	query=request.GET.get('q1')
 	if query:

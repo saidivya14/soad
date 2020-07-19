@@ -251,13 +251,13 @@
                     </div>
                     {% if not own_auction %}
                       {% if not products.is_active and not products.is_exp%}
-                        <div id="div_id_title" class="form-group">
-                          <strong><label for="id_title" style="color:black;">
+                        <div id="div_id_comments" class="form-group">
+                          <strong><label for="id_comments" style="color:black;">
                             <strong>Comments</strong>
                               (if you suspect in this product else ignore)
                           </label></strong>
                           <div class>
-                          <input class="textinput textInput form-control form-control" required id="id_title" maxlength="3000" name="title" type="text">
+                          <input class="textinput textInput form-control form-control" required id="id_comments" maxlength="3000" name="comments" type="text">
                           </div>
                         </div>
                       {% endif %}

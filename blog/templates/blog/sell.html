@@ -14,18 +14,6 @@
   <div style="width:40%;height: 70%;padding-top: 2%;margin-left: 30%;padding-bottom: 3%">
       <form method="POST" enctype="multipart/form-data"> 
             {% csrf_token %}
-            <!--<fieldset class="form-group">
-                 <h2 class="border-bottom mb-4">UPLOAD YOUR ITEM HERE </h2>
-                 {{ form|crispy}}
-            </fieldset>
-            DECLARE @First datetime
-            DECLARE @Second datetime
-            SET @First = '04/02/2008 05:23:22'
-            SET @Second = getdate()
-
-            SELECT DATEDIFF(day,@First,@Second)*24 as TotalHours,
-            DATEDIFF(day,@First,@Second)*24*60 as TotalMinutes,
-            DATEDIFF(day,@First,@Second)*24*60*60 as TotalSeconds-->
             <div id="div_id_title" class="form-group">
               <label for="id_title" class=" requiredField">
                                   Title

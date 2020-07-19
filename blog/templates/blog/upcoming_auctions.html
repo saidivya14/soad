@@ -4,14 +4,14 @@
 <div class="bg-light py-3">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 mb-0"><a href="{% url 'blog-home' %}"></span> <strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Ongoing Auctions</strong></div>
+      <div class="col-md-12 mb-0"><a href="{% url 'blog-home' %}"></span> <strong style="color:blue;">Home</strong></a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Upcoming Auctions</strong></div>
     </div>
   </div>
 </div> 
 <h4>
 <div class="row" style="padding-top:50px; padding-left: 85px; padding-right: 85px;">
   <div class="column" style="float: left; width: 33.33%;">
-    <div class="float-md-left mb-4"><h2 class="text-black h5">Live Auctions</h2></div>
+    <div class="float-md-left mb-4"><h2 class="text-black h5">Upcoming Auctions</h2></div>
   </div>
   <div class="column" style="float: left; width: 33.33%;">
     <div class="search-container">
@@ -45,7 +45,7 @@
   </div>
 </div>
 {% if items %}
-<div class=shop1 style="width: 100%;  height: 1200px; padding: 50px;  padding-top:0px; margin: 20px;">
+<div class=shop1 style="width: 100%;  height: 1100px; padding: 20px;  padding-top:0px; margin: 20px;">
   <div class="row">
     {% for post in items %}
       <div style="color:black;font-size: 20px;margin: 20px;">
@@ -56,52 +56,42 @@
         <div>
           <a href="{% url 'shop-item' post.pk %}" style="color:blue">{{post.title}}</a>
         </div><br>
-        Current Bid : {{post.currentbid}}<br>
         Category : {{post.category}}<br>
-        {% if post.remaining_days == 0 %}
-          {% if post.remaining_hours == 0 %}
-            <div>Remaining Time::</div>
-            <div>{{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
-          {% else %}
-            <div>Remaining Time::</div>
-            <div>{{post.remaining_hours}}hrs {{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
-          {% endif %}
-        {% else %}
-          <div>Remaining Time::</div>
-          <div>{{post.remaining_days}}days {{post.remaining_hours}}hrs {{post.remaining_minutes}}min  {{post.remaining_seconds}}sec</div>
-        {% endif %}  
+        Start time: {{post.starttime}}<br>
+        End time: {{post.endtime}}<br></br>
         <div class="form-group">
-          <a href="{% url 'shop-item' post.pk %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Bid Now!</button></a>
-        </div><br></br>
+          <a href="{% url 'add-to-wishlist' post.pk %}"><button class="btn btn-outline-info" style ="background-color: green;padding:20px 28px;" type="submit">Add to wishlist</button></a>
+        </div>
+
       </div></center>
        
       </div>
     {% endfor %}
   </div>
-  <div class=shop1 style="width: 100%;  height: 100px; padding: 30px;  margin: 5px;">
-    <div class="pagination" style="width: 100%;  height: 60px;">
-    
-    {% if items.has_previous %}
-      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;"  href="?page=1">First</a>
-      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{items.previous_page_number}}">Previous</a>
+<div class=shop1 style="width: 100%;  height: 100px; padding: 30px;  margin: 5px;">
+  <div class="pagination" style="width: 100%;  height: 60px;">
+  
+  {% if items.has_previous %}
+    <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;"  href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{items.previous_page_number}}">Previous</a>
+  {% endif %}
+  
+  {% for num in items.paginator.page_range %}
+    {% if items.number == num %}
+      <a class="btn btn-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a>  
+    {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
+      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a> 
     {% endif %}
-    
-    {% for num in items.paginator.page_range %}
-      {% if items.number == num %}
-        <a class="btn btn-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a>  
-      {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
-        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a> 
-      {% endif %}
-    {% endfor %}
+  {% endfor %}
 
-      {% if items.has_next %}
-        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.next_page_number}}">Next</a>
-        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.paginator.num_pages}}">Last</a>
-      {% endif %}
+    {% if items.has_next %}
+      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.next_page_number}}">Next</a>
+      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.paginator.num_pages}}">Last</a>
+    {% endif %}
 
-      </div> 
+    </div> 
 
-  </div>
+</div>
 </div>
 {% else %}
 <div class=con style="height:240px;padding-top: 30px">

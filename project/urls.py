@@ -32,10 +32,13 @@ urlpatterns = [
     path('<int:auction_id>/bid/', blog_views.bid, name='bid'),
     path('myitems/',blog_views.getmyitems,name='myitems'),
     path('mybids/',blog_views.my_bids,name='my_bids'),
+    path('mywishlist/',blog_views.my_wishlist,name='my_wishlist'),
     path('auctions/',blog_views.auctions,name='all-auctions'),
     path('upcomingauctions/',blog_views.upauctions,name='upcoming-auctions'),
     path('shop/',blog_views.shop,name='shop'),
     path('shop/item/<int:pid>', blog_views.shop_item, name='shop-item'),
+    path('add_to_wishlist/<int:pid>', blog_views.add_to_wishlist, name='add-to-wishlist'),
+    path('delete_from_wishlist/<int:pid>', blog_views.delete_from_wishlist, name='delete-from-wishlist'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='blog/password_reset.html'

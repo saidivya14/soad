@@ -35,7 +35,6 @@ class Post(models.Model):
     image=models.ImageField(blank='True',upload_to='items/')
     category=models.CharField(max_length=300, choices=CATEGORY)
     description= models.TextField()
-    comments = models.TextField(blank=True,null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateTimeField(default=timezone.now)
     starttime = models.DateTimeField(default=(datetime.now()+timedelta(days=1)))
@@ -195,9 +194,11 @@ class Order(models.Model):
     def __str__(self):
         return self.product.title
 
-    
+class Wishlist(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    
-   
-    
-   
+class Comments(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comments = models.TextField()

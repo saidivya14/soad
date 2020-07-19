@@ -60,6 +60,7 @@
               <div class="site-top-icons">
                 <ul>
                   <li ><a href="{% url 'profile'%}"><span class="fa fa-user"></span></a></li>
+                  <li ><a href="{% url 'my_wishlist'%}"><span class="fa fa-list-alt"></span></a></li>
                   <li ><a href="{% url 'myorders'%}"><span class="fa fa-shopping-bag"></span></a></li>
                   <li ><a href="{% url 'logout'%}"><span class="fa fa-sign-out"></span></a></li>
                 </ul>
@@ -112,7 +113,7 @@
                 <h5>Information</h5>
                 <ul>
                     <li><a href="{% url 'about' %}">About Us</a></li>
-                    <li><a href="#">Checkout</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                 </ul>
             </div>
@@ -123,7 +124,8 @@
                 <ul style="color:white;">
                     <li><a href="{% url 'myitems' %}">My items</a></li>
                     <li><a href="{% url 'my_bids' %}">My bids</a></li>
-                    <li><a href="{% url 'shop' %}">Shop</a></li>
+                    <li><a href="{% url 'my_wishlist' %}">My wishlist</a></li>
+                    <li><a href="{% url 'myorders' %}">My orders</a></li>
                 </ul>
             </div>
         </div>
@@ -134,6 +136,7 @@
                     <li style="padding-bottom: 10px;">Free Shipping</li>
                     <li style="padding-bottom: 10px;">Free Returns</li>
                     <li style="padding-bottom: 10px;">Customer Support</li>
+                    <li style="padding-bottom: 10px;">100% Verification</li>
                 </ul>
             </div>
         </div>

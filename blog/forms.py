@@ -22,11 +22,12 @@ class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model=Profile
 		fields=['image']
+
 class SellForm(forms.ModelForm):
 	
 	class Meta:
 		model=Post
-		fields=['title','minprice','image','category','description','endtime','comments']
+		fields=['title','minprice','image','category','description','endtime']
 		
 
 
