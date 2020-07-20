@@ -40,6 +40,7 @@ def charge(request,pk):
 		print('Data:', request.POST)
 		customer = stripe.Customer.create(
 			email=request.POST['email'],
+			name=request.POST['name'],
 			source=request.POST['stripeToken']
 			)
 		charge = stripe.Charge.create(
@@ -402,12 +403,32 @@ def upauctions(request):
 		'items' : latest_auction_list
 	}
 	return render(request,'blog/upcoming_auctions.html',context)
+
+def search_upcoming(request):
+	query=request.GET.get('q3')
+	if query:
+		posts = Post.objects.all().filter(is_active=False).filter(is_exp=False)
+		results=posts.filter(Q(title__icontains=query)|Q(category__icontains=query)).order_by('-date_added')
+	else:
+		results=Post.objects.all().filter(is_active=False).filter(is_exp=False).order_by('-date_added')
+	if not results:
+		return render(request,'blog/nosearch_upcoming.html')
+	for a in results:
+		a.resolve()
+	paginator = Paginator(results,6)
+	page = request.GET.get('page')
+	results = paginator.get_page(page)
+	context={
+		'items' : results
+	}
+	return render(request,'blog/upcoming_auctions.html',context)
 def search_auctions(request):
 	query=request.GET.get('q1')
 	if query:
-		results=Post.objects.filter(Q(title__icontains=query)|Q(category__icontains=query)).order_by('-date_added')
+		posts = Post.objects.all().filter(is_exp=True)
+		results=posts.filter(Q(title__icontains=query)|Q(category__icontains=query)).order_by('-date_added')
 	else:
-		results=Post.objects.all().order_by('-date_added')
+		results=Post.objects.all().filter(is_exp=True).order_by('-date_added')
 	if not results:
 		return render(request,'blog/nosearch_auctions.html')
 	for a in results:

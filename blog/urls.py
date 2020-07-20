@@ -9,6 +9,7 @@ urlpatterns = [
     path('stripecheck/<int:pk>/',views.stripecheck,name='stripecheck'),
     url(r'^results-auctions/$',views.search_auctions,name='search_auctions'),
     url(r'^results-shop/$',views.search_shop,name='search_shop'),
+    url(r'^results-upcoming/$',views.search_upcoming,name='search_upcoming'),
     path('charge/<int:pk>/', views.charge, name="charge"),
     path('success', views.successMsg, name="success"),
     path('address/<int:pk>/', views.address, name="address"),

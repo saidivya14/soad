@@ -23,7 +23,7 @@
           Price : {{item.product.final_value}}<br></br>
           Category : {{item.product.category}}<br></br>
           <div class="form-group">
-            <a href="{% url 'delete-from-wishlist' item.pk %}"><button class="btn btn-outline-info" style ="background-color: red;padding:20px 28px;" type="submit">Remove from wishlist</button></a>
+            <a href="{% url 'delete-from-wishlist' item.pk %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;padding:20px 28px;" type="submit">Remove from wishlist</button></a>
           </div>
           <!--DESCRIPTION : {{item.description}}<br></br>-->
         </div></center>
@@ -35,21 +35,21 @@
       <div class="pagination" style="width: 100%;  height: 60px;">
       
       {% if items.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{items.previous_page_number}}">Previous</a>
+        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{items.previous_page_number}}">Previous</a>
       {% endif %}
       
       {% for num in items.paginator.page_range %}
         {% if items.number == num %}
-          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>  
+          <a class="btn btn-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a>  
         {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
-          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a> 
+          <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a> 
         {% endif %}
       {% endfor %}
 
       {% if items.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ items.next_page_number}}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ items.paginator.num_pages}}">Last</a>
+        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.next_page_number}}">Next</a>
+        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.paginator.num_pages}}">Last</a>
       {% endif %}
 
       </div> 
@@ -58,7 +58,7 @@
 {% else %}
 <div class=con style="height:240px;padding-top: 30px">
     <div class="alert alert-info">
-        There are no orders by you yet! To buy - <a style="color:blue;" href="{% url 'shop' %}">Click here</a>
+        Empty wishlist! To add items to wishlist - <a style="color:blue;" href="{% url 'upcoming-auctions' %}">Click here</a> 
     </div>
  </div>
 

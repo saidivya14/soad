@@ -198,7 +198,3 @@ class Wishlist(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-class Comments(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Post, on_delete=models.CASCADE)
-    comments = models.TextField()
