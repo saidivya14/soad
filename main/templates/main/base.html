@@ -33,47 +33,31 @@
                         <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Home</a>
+                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_1"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Shop
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                        <a class="dropdown-item" href="#"> shop category</a>
-                                        <a class="dropdown-item" href="#">product details</a>
-                                        
-                                    </div>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'about' %}">About</a> 
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Shop</a> 
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_3"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        pages
+                                        courses
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
                                         <a class="dropdown-item" href="#"> 
-                                            login
-                                            
+                                            Photography
                                         </a>
-                                        
-                                    </div>
-                                </li>
-                                
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_2"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        blog
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="#"> blog</a>
-                                        <a class="dropdown-item" href="#">Single blog</a>
+                                        <a class="dropdown-item" href="#"> 
+                                            Guitar
+                                        </a>
                                     </div>
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Contact</a>
-                                    
+                                    <a class="nav-link" href="{% url 'contact' %}">Contact</a> 
                                 </li>
                             </ul>
                         </div>

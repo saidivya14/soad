@@ -12,5 +12,6 @@ def single_product(request):
 
 def contact(request):
 	return render(request,'main/contact.html')
+	
 def about(request):
 	return render(request,'main/about.html')
