@@ -13,11 +13,21 @@
         <link rel="stylesheet" href="{% static 'main/css/themify-icons.css' %}">
         <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'main/css/about.css' %}">
+        <!-- message here -->
 
+          {% if messages %}
+          {% for message in messages %}
+
+          <script>
+            alert("{{ message }}");
+          </script>
+
+          {% endfor %}
+          {% endif %}
 
 </head>
 <body>
-        <!--::header part start::-->
+    <!--::header part start::-->
     <header class="main_menu home_menu">
         <div class="container-fluid">
             <div class="row align-items-center justify-content-center">
@@ -62,8 +72,12 @@
                             </ul>
                         </div>
                         <div class="hearer_icon d-flex">
-                            <a class="nav-link" href="#">Login</a>
-                            <a class="nav-link" href="#">Register</a>
+                            {% if user.is_authenticated %}
+                            <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                            <li><a class="nav-link" href="{% url 'register' %}">Sign up</a></li>
+                            <li><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
+                            {% endif %}
                         </div>
                     </nav>
                 </div>
