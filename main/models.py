@@ -40,7 +40,7 @@ class Course(models.Model):
     )
     title= models.CharField(max_length=300, unique=True)
     price= models.IntegerField()
-    image=models.ImageField(blank='True',upload_to='items/')
+    image=models.ImageField(blank='True',upload_to='courses/')
     category=models.CharField(max_length=300, choices=CATEGORY)
     difficulty=models.CharField(max_length=300, choices=DIFFICULTY)
     description= models.CharField(max_length=1000)
