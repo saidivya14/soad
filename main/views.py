@@ -9,6 +9,12 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.contrib.auth import logout
+from main.models import Product
+from .forms import UserUpdateForm,ProfileUpdateForm
+from django.contrib.auth.models import User
+import requests
+from requests.exceptions import RequestException
+from django.core.paginator import Paginator
 
 # Create your views here.
 def home(request):
@@ -17,14 +23,48 @@ def home(request):
 def tracking(request):
 	return render(request,'main/tracking.html')
 
-def single_product(request):
-	return render(request,'main/single_product.html')
+def single_product(request,id):
+    products = Product.objects.get(pk=id)
+    context={
+        'products' : products
+    }
+    return render(request,'main/single_product.html',context)
 
 def contact(request):
 	return render(request,'main/contact.html')
 	
 def about(request):
 	return render(request,'main/about.html')
+
+def get_courses():
+    try:
+        ads = requests.get("http://localhost:8000/api/courses")
+        return ads.json()
+    except RequestException:
+        print("Ad server not running/connecting")
+        return {}
+
+def coursepage(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    return render(request, "main/course.html", asetrack)
+
+def get_products():
+    try:
+        ads = requests.get("http://localhost:8000/api/products")
+        return ads.json()
+    except RequestException:
+        print("Ad server not running/connecting")
+        return {}
+
+def shop(request):
+    asetrack = {}
+    itemlist = get_products()
+    paginator = Paginator(itemlist,9)
+    page = request.GET.get('page')
+    itemlist = paginator.get_page(page)
+    asetrack['items'] = itemlist
+    return render(request, "main/shop.html", asetrack)
 
 def logout_view(request):
     logout(request)
@@ -66,3 +106,22 @@ def Login(request):
     return render(request, 'main/login.html', {'form': form})
 
 # Create your views here.
+@login_required
+def profile(request):
+	if request.method== 'POST':
+		u_form=UserUpdateForm(request.POST,instance=request.user)
+		p_form=ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+		if u_form.is_valid() and p_form.is_valid():
+			u_form.save()
+			p_form.save()
+			messages.success(request,f'Your account is updated ')
+			return redirect('profile')
+	else:
+		u_form=UserUpdateForm(instance=request.user)
+		p_form=ProfileUpdateForm(instance=request.user.profile)
+	context={
+		'u_form' :u_form,
+		'p_form' :p_form
+		
+	}
+	return render(request,'main/profile.html',context)

@@ -1,22 +1,22 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<style>
-  body {
-    background-color:#FFE4E1;
-  }
-  </style>
-<div class="content-section col-md-8 col-md-offset-2">
-  <form method="POST" style="border: 5px solid black; margin: 4%; padding:10%; border-radius:1%;">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      {{ form|crispy}}
-    </fieldset>
-    <center>
-      <button style="background: black; padding:2%; font-size: 2rem; color:white;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-check"></span> &nbsp; sign up</button>
-    </center>
-    <br />
-    <sub><a href="{% url "login" %}" style="text-decoration: none; color: blue; padding:5%; cursor:pointer;"><b>Already have an account ?</b></a></sub>
-  </form>
+<div style="width:40%;height: 70%;padding-top: 2%;margin-left: 30%;padding-bottom: 3%">
+     <form method="POST"> 
+           {% csrf_token %}
+           <fieldset class="form-group">
+                <h2 class="border-bottom mb-4">REGISTER </h2>
+                {{ form|crispy}}
+           </fieldset>
+           <div class="form-group">
+                 <button class="btn btn-outline-info" type="submit" style ="background-color: #008CBA;">Sign up</button>
+           </div>
+     </form>
+     <div class="border-top pt-3">
+            <h4 class="text-muted">
+              Already have an account? <a class="ml-2" style="color:black;font-size:85%;" href="{% url 'login'%}">Login</a>
+            </h4>
+
+     </div>
 </div>
 {% endblock content %}

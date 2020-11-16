@@ -6,7 +6,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Orion</title>
+        <title>EchoLearn</title>
         <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'main/css/animate.css' %}">
         <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
@@ -33,7 +33,8 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-11">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="{% static 'main/img/logo.png' %}" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.html"><h1 style="color:black;">
+                            <span style="color:red;">E</span><span style="color:blue;">CHO</span><span style="color:red;">L</span><span style="color:blue;">EARN</span></h1></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -49,23 +50,11 @@
                                     <a class="nav-link" href="{% url 'about' %}">About</a> 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Shop</a> 
+                                    <a class="nav-link" href="{% url 'shop' %}">Shop</a> 
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_3"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        courses
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="#"> 
-                                            Photography
-                                        </a>
-                                        <a class="dropdown-item" href="#"> 
-                                            Guitar
-                                        </a>
-                                    </div>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'courses' %}">Courses</a> 
                                 </li>
-                                
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'contact' %}">Contact</a> 
                                 </li>
@@ -73,10 +62,13 @@
                         </div>
                         <div class="hearer_icon d-flex">
                             {% if user.is_authenticated %}
-                            <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'profile'%}"><span class="ti-user"></span></a></li>
+                                <li style="list-style-type: none"><a class="nav-link" href="#"><span class="ti-heart" ></span></a></li>   
+                                <li style="list-style-type: none"><a class="nav-link" href="#"><span class="ti-shopping-cart"></span></a></li>
+                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'logout'%}">Logout</a></li>  
                             {% else %}
-                            <li><a class="nav-link" href="{% url 'register' %}">Sign up</a></li>
-                            <li><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
+                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'register' %}">Sign up</a></li>
+                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
                             {% endif %}
                         </div>
                     </nav>
@@ -89,65 +81,55 @@
     {% block content %}{% endblock %}
 
     <!--::footer_part start::-->
-    <footer class="footer_part">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-sm-6 col-lg-2">
-                    <div class="single_footer_part">
-                        <h4>Category</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Male</a></li>
-                            <li><a href="#">Female</a></li>
-                            <li><a href="#">Shoes</a></li>
-                            <li><a href="#">Fashion</a></li>
-                        </ul>
-                    </div>
+    <footer class="footer-section" style="background:black;padding: 50px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+              <div class="footer-left">
+                  <div class="footer-logo" style="padding: 10px">
+                      <a href="#"><h1 style="color:white;"><span style="color:red;">ECHOLEARN</span></h1></a>
+                  </div>
+                  <ul style="color:white;">
+                      <li>630 Gnan Marg, Sri City, Satyavedu Mandal, Chittor dist, Andhra Pradesh, India</li>
+                      <li>Phone: +91 9381487445</li>
+                      <li>Email: orionwebsite123@gmail.com</li>
+                  </ul>
+              </div>
+          </div>
+            <div class="col-lg-2 offset-lg-1">
+                <div class="footer-widget">
+                    <h5 style="padding: 5px;color:white;font-size: 25px">Information</h5>
+                    <ul>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'about' %}">About Us</a></li>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'profile' %}">Profile</a></li>
+                        <li style="padding: 5px; color:white;"><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
                 </div>
-                <div class="col-sm-6 col-lg-2">
-                    <div class="single_footer_part">
-                        <h4>Company</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="">About</a></li>
-                            <li><a href="">News</a></li>
-                            <li><a href="">FAQ</a></li>
-                            <li><a href="">Contact</a></li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="footer-widget offset-lg-3">
+                    <h5 style="padding: 5px;color:white;font-size: 22px">My Account</h5>
+                    <ul style="color:white;">
+                        <li style="padding: 5px; color: white;"><a href="#">My Courses</a></li>
+                        <li style="padding: 5px; color: white;"><a href="#">My Cart</a></li>
+                        <li style="padding: 5px; color: white;"><a href="#">My wishlist</a></li>
+                        <li style="padding: 5px; color: white;"><a href="#">My orders</a></li>
+                    </ul>
                 </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="single_footer_part">
-                        <h4>Address</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">200, Green block, NewYork</a></li>
-                            <li><a href="#">+10 456 267 1678</a></li>
-                            <li><span>contact89@winter.com</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="single_footer_part">
-                        <h4>Newsletter</h4>
-                        <div id="mc_embed_signup">
-                            <form target="_blank"
-                                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                method="get" class="subscribe_form relative mail_part">
-                                <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-                                    class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = ' Email Address '">
-                                <button type="submit" name="submit" id="newsletter-submit"
-                                    class="email_icon newsletter-submit button-contactForm">subscribe</button>
-                                <div class="mt-10 info"></div>
-                            </form>
-                        </div>
-                        <div class="social_icon">
-                            <a href="#"><i class="ti-facebook"></i></a>
-                            <a href="#"><i class="ti-twitter-alt"></i></a>
-                            <a href="#"><i class="ti-instagram"></i></a>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1">
+                <div class="footer-widget">
+                    <h5 style="padding: 5px;color:white;font-size: 25px">Our services</h5>
+                    <ul style="color:white;">
+                        <li style="padding-bottom: 10px;">Free Shipping</li>
+                        <li style="padding-bottom: 10px;">Free Returns</li>
+                        <li style="padding-bottom: 10px;">Customer Support</li>
+                        <li style="padding-bottom: 10px;">100% Verification</li>
+                    </ul>
                 </div>
             </div>
         </div>
+      </div>
     </footer>
     <!--::footer_part end::-->
     <script src="{% static 'main/js/jquery-1.12.1.min.js' %}"></script>

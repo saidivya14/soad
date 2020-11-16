@@ -10,8 +10,8 @@ urlpatterns = [
     path('tracking',views.tracking,name='tracking'),
     path('contact',views.contact,name='contact'),
     path('about',views.about,name='about'),
-    path('single_product',views.single_product,name='single_product'),
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.Login, name='login'),
     path('register/', views.register, name='register'),
+    path('api/', include('main.api.urls')),
 ]
