@@ -44,7 +44,7 @@ class Course(models.Model):
     category=models.CharField(max_length=300, choices=CATEGORY)
     difficulty=models.CharField(max_length=300, choices=DIFFICULTY)
     description= models.CharField(max_length=1000)
-    orgnaisation=models.CharField(max_length=300)
+    organisation=models.CharField(max_length=300)
     instructor=models.CharField(max_length=300)
     noofweeks=models.IntegerField()
 
