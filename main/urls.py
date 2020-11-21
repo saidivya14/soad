@@ -14,4 +14,6 @@ urlpatterns = [
     path('login/', views.Login, name='login'),
     path('register/', views.register, name='register'),
     path('api/', include('main.api.urls')),
+    path('add_to_wishlist/<int:id>', views.add_to_wishlist, name='add-to-wishlist'),
+    path('delete_from_wishlist/<int:id>', views.delete_from_wishlist, name='delete-from-wishlist'),
 ]

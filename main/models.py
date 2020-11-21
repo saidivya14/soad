@@ -18,7 +18,7 @@ class Product(models.Model):
         ('Violin', 'Violin'),
     )
     title= models.CharField(max_length=300, unique=True)
-    price= models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image=models.ImageField(blank='True',upload_to='items/')
     category=models.CharField(max_length=300, choices=CATEGORY)
     description= models.TextField()
@@ -63,3 +63,7 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+class Wishlist(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)

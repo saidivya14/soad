@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cart',
     'main.apps.MainConfig',
     'crispy_forms',
     'django.contrib.admin',
@@ -143,3 +144,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "rachabhavani955@gmail.com"
 EMAIL_HOST_PASSWORD = "racharacha"
+
+CART_SESSION_ID = 'cart'

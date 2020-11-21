@@ -62,10 +62,18 @@
                         </div>
                         <div class="hearer_icon d-flex">
                             {% if user.is_authenticated %}
-                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'profile'%}"><span class="ti-user"></span></a></li>
-                                <li style="list-style-type: none"><a class="nav-link" href="#"><span class="ti-heart" ></span></a></li>   
-                                <li style="list-style-type: none"><a class="nav-link" href="#"><span class="ti-shopping-cart"></span></a></li>
-                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'logout'%}">Logout</a></li>  
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="{% url 'profile'%}"><span class="ti-user"></span></a>
+                                </li>
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="#"><span class="ti-heart" ></span></a>
+                                </li>   
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="{% url 'cart:cart_detail' %}"><span class="ti-shopping-cart"></span></a>
+                                </li>
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+                                </li>  
                             {% else %}
                                 <li style="list-style-type: none"><a class="nav-link" href="{% url 'register' %}">Sign up</a></li>
                                 <li style="list-style-type: none"><a class="nav-link" href="{% url 'login' %}">Log in</a></li>

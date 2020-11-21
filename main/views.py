@@ -9,12 +9,13 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.contrib.auth import logout
-from main.models import Product
+from main.models import Product,Wishlist
 from .forms import UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.models import User
 import requests
 from requests.exceptions import RequestException
 from django.core.paginator import Paginator
+from cart.forms import CartAddProductForm
 
 # Create your views here.
 def home(request):
@@ -23,12 +24,44 @@ def home(request):
 def tracking(request):
 	return render(request,'main/tracking.html')
 
+def add_to_wishlist(request,id):
+    product = Product.objects.get(pk=id)
+    ws = Wishlist.objects.filter(product=product).filter(username=request.user)
+    if ws:
+        posts = Wishlist.objects.filter(username=request.user)
+    else:
+        Wishlist.objects.create(product=product,username=request.user)
+        posts = Wishlist.objects.filter(username=request.user)
+    paginator = Paginator(posts,6)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context={
+        'posts' : posts
+    }
+    return render(request,'main/my_wishlist.html',context)
+
+def delete_from_wishlist(request,id):
+    product = Product.objects.get(pk=id)
+    ws = Wishlist.objects.filter(product=product).filter(username=request.user)
+    ws.delete()
+    posts = Wishlist.objects.filter(username=request.user)
+    paginator = Paginator(posts,6)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context={
+        'posts' : posts
+    }
+    return render(request,'main/my_wishlist.html',context)
+
+
 def single_product(request,id):
     products = Product.objects.get(pk=id)
-    context={
-        'products' : products
-    }
-    return render(request,'main/single_product.html',context)
+    cart_product_form = CartAddProductForm()
+    ws = Wishlist.objects.filter(product=products).filter(username=request.user)
+    if ws:
+        return render(request,'main/single_product1.html', {'products':products,'cart_product_form':cart_product_form})
+    else:
+        return render(request,'main/single_product.html', {'products':products,'cart_product_form':cart_product_form})
 
 def contact(request):
 	return render(request,'main/contact.html')

@@ -52,7 +52,7 @@
                     {% csrf_token %}
                     <input type="submit" value="Add to cart">
                   </form>
-                    <a href="{% url 'add-to-wishlist' products.id %}"><button class="btn_3 button-contactForm"><i class="ti-heart forhover" style="color:white;padding-right: 3px;"></i>Add to Wishlist</button></a>
+                    <a href="{% url 'delete-from-wishlist' products.id %}"><button class="btn_3 button-contactForm"><i class="ti-heart forhover" style="color:white;padding-right: 3px;"></i>Wishlisted</button></a>
               </div>
             </div>
           </div>

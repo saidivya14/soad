@@ -27,6 +27,7 @@ urlpatterns = [
     path('product/<int:id>', main_views.single_product, name='shopitem'),
     path('courses', main_views.coursepage, name="courses"),
     path('', include('main.urls')),
+    path('cart/', include('cart.urls')),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='main/password_reset.html'
