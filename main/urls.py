@@ -16,4 +16,9 @@ urlpatterns = [
     path('api/', include('main.api.urls')),
     path('add_to_wishlist/<int:id>', views.add_to_wishlist, name='add-to-wishlist'),
     path('delete_from_wishlist/<int:id>', views.delete_from_wishlist, name='delete-from-wishlist'),
+    path('stripecheck/<int:id>/',views.stripecheck,name='stripecheck'),
+    path('charge/<int:id>/', views.charge, name="charge"),
+    path('success', views.successMsg, name="success"),
+    path('certi/<int:id>/', views.certi, name="certi"),
+    path('certid/<int:id>/', views.certid, name="certid"),
 ]

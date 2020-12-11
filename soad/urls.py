@@ -24,9 +24,28 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/',main_views.profile,name='profile'),
     path('shop', main_views.shop, name="shop"),
+    path('mycourses', main_views.mycourses, name="mycourses"),
     path('product/<int:id>', main_views.single_product, name='shopitem'),
+    path('coursedetail/<int:id>', main_views.coursedetail, name='coursedetail'),
+    path('v1/<int:id>', main_views.video1, name='v1'),
+    path('v2/<int:id>', main_views.video2, name='v2'),
+    path('v3/<int:id>', main_views.video3, name='v3'),
+    path('v4/<int:id>', main_views.video4, name='v4'),
+    path('v5/<int:id>', main_views.video5, name='v5'),
+    path('p1/<int:cat>', main_views.pricerange1, name='p1'),
+    path('p2/<int:cat>', main_views.pricerange2, name='p2'),
+    path('p3/<int:cat>', main_views.pricerange3, name='p3'),
     path('courses', main_views.coursepage, name="courses"),
+    path('allcourses', main_views.allcoursepage, name="allcourses"),
+    path('photography', main_views.photography, name="photography"),
+    path('music', main_views.music, name="music"),
+    path('paint', main_views.paint, name="paint"),
+    path('dance', main_views.dance, name="dance"),
     path('', include('main.urls')),
+    path('stripecheck/<int:id>/',main_views.stripecheck,name='stripecheck'),
+    path('charge/<int:id>/', main_views.charge, name="charge"),
+    path('success', main_views.successMsg, name="success"),
+    path('product/<int:id>', main_views.single_product, name='shopitem'),
     path('cart/', include('cart.urls')),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
@@ -51,4 +70,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns  += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

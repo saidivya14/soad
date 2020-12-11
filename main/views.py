@@ -5,19 +5,75 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import UserRegisterForm
 from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.contrib.auth import logout
-from main.models import Product,Wishlist
+from main.models import Product,Wishlist,Course,CourseStudents
 from .forms import UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.models import User
 import requests
 from requests.exceptions import RequestException
 from django.core.paginator import Paginator
 from cart.forms import CartAddProductForm
+import stripe
+from django.urls import reverse
+stripe.api_key = "sk_test_51HqIOnLC1dFeExGNo52wPrsiZrIqvMfDefLTv1Um1jDodhCZwocdMhybjWAME6BsKnpuQbxhMU1H6dntx4bYbT2k00PsDY29ie"
+from django_xhtml2pdf.utils import generate_pdf
 
 # Create your views here.
+def stripecheck(request,id):
+    product = Course.objects.get(pk=id)
+    context = {'product':product}
+    return render(request,'main/stripecheck.html',context)
+
+def charge(request,id):
+    product = Course.objects.get(pk=id)
+    amount=product.price
+    if request.method == 'POST':
+        print('Data:', request.POST)
+        customer = stripe.Customer.create(
+            email=request.POST['email'],
+            name=request.POST['name'],
+            source=request.POST['stripeToken'],
+            )
+        charge = stripe.Charge.create(
+            customer=customer,
+            amount=amount*100,
+            currency='inr',
+            description="Course payment"
+            )
+    CourseStudents.objects.create(course=product,student=request.user)
+    return redirect(reverse('success'))
+def certid(request,id):
+    resp = HttpResponse(content_type='application/pdf')
+    
+    asetrack = {}
+    asetrack['user']=request.user
+    asetrack['course'] = Course.objects.get(pk=id)
+    result = generate_pdf('main/certid.html', file_object=resp,context=asetrack)
+    return result
+    
+    
+    
+    return render(request,'main/certi.html',asetrack)
+def certi(request,id):
+
+    
+    
+    asetrack = {}
+    asetrack['user']=request.user
+    asetrack['course'] = Course.objects.get(pk=id)
+    
+    return render(request, 'main/certi.html',asetrack)
+    
+    
+    
+    return render(request,'main/certi.html',asetrack)
+def successMsg(request):
+    return render(request, 'main/success.html')
+
 def home(request):
 	return render(request,'main/home.html')
 
@@ -63,6 +119,149 @@ def single_product(request,id):
     else:
         return render(request,'main/single_product.html', {'products':products,'cart_product_form':cart_product_form})
 
+def coursedetail(request,id):
+    asetrack = {}
+    asetrack['course'] = Course.objects.get(pk=id)
+    course=Course.objects.get(pk=id)
+    asetrack['key']=CourseStudents.objects.filter(course=course,student=request.user)
+    key=CourseStudents.objects.filter(course=course,student=request.user)
+    if key:
+        c= CourseStudents.objects.get(course=course,student=request.user)
+    
+        asetrack['percentage']=c.getscore()
+        score=c.getscore()
+    else:
+        return render(request,'main/coursedetail.html',asetrack)
+
+    if score==100:
+        asetrack['completed']=True
+    if c.v1==True:
+        asetrack['c1']=True
+    if c.v2==True:
+        asetrack['c2']=True
+    if c.v3==True:
+        asetrack['c3']=True
+    if c.v4==True:
+        asetrack['c4']=True
+    if c.v5==True:
+        asetrack['c5']=True
+      
+    return render(request,'main/coursedetail.html',asetrack)
+def video1(request,id):
+    asetrack = {}
+    asetrack['course'] = Course.objects.get(pk=id)
+    course=Course.objects.get(pk=id)
+    asetrack['key']=CourseStudents.objects.filter(course=course,student=request.user)
+    
+    c= CourseStudents.objects.get(course=course,student=request.user)
+    c.setv1()
+    if c.v1==True:
+        asetrack['c1']=True
+    if c.v2==True:
+        asetrack['c2']=True
+    if c.v3==True:
+        asetrack['c3']=True
+    if c.v4==True:
+        asetrack['c4']=True
+    if c.v5==True:
+        asetrack['c5']=True
+      
+    asetrack['percentage']=c.getscore()
+    score=c.getscore()
+    if score==100:
+        asetrack['completed']=True
+    return render(request,'main/coursedetail.html',asetrack)
+def video2(request,id):
+    asetrack = {}
+    asetrack['course'] = Course.objects.get(pk=id)
+    course=Course.objects.get(pk=id)
+    asetrack['key']=CourseStudents.objects.filter(course=course,student=request.user)
+    asetrack['c2']=True
+    c= CourseStudents.objects.get(course=course,student=request.user)
+    c.setv2()
+    if c.v1==True:
+        asetrack['c1']=True
+    if c.v2==True:
+        asetrack['c2']=True
+    if c.v3==True:
+        asetrack['c3']=True
+    if c.v4==True:
+        asetrack['c4']=True
+    if c.v5==True:
+        asetrack['c5']=True
+    asetrack['percentage']=c.getscore()
+    score=c.getscore()
+    if score==100:
+        asetrack['completed']=True
+    return render(request,'main/coursedetail.html',asetrack)
+def video3(request,id):
+    asetrack = {}
+    asetrack['course'] = Course.objects.get(pk=id)
+    course=Course.objects.get(pk=id)
+    asetrack['key']=CourseStudents.objects.filter(course=course,student=request.user)
+    asetrack['c3']=True
+    c= CourseStudents.objects.get(course=course,student=request.user)
+    c.setv3()
+    if c.v1==True:
+        asetrack['c1']=True
+    if c.v2==True:
+        asetrack['c2']=True
+    if c.v3==True:
+        asetrack['c3']=True
+    if c.v4==True:
+        asetrack['c4']=True
+    if c.v5==True:
+        asetrack['c5']=True
+    asetrack['percentage']=c.getscore()
+    score=c.getscore()
+    if score==100:
+        asetrack['completed']=True
+    return render(request,'main/coursedetail.html',asetrack)
+def video4(request,id):
+    asetrack = {}
+    asetrack['course'] = Course.objects.get(pk=id)
+    course=Course.objects.get(pk=id)
+    asetrack['key']=CourseStudents.objects.filter(course=course,student=request.user)
+    c= CourseStudents.objects.get(course=course,student=request.user)
+    c.setv4()
+    if c.v1==True:
+        asetrack['c1']=True
+    if c.v2==True:
+        asetrack['c2']=True
+    if c.v3==True:
+        asetrack['c3']=True
+    if c.v4==True:
+        asetrack['c4']=True
+    if c.v5==True:
+        asetrack['c5']=True
+    asetrack['percentage']=c.getscore()
+    score=c.getscore()
+    if score==100:
+        asetrack['completed']=True
+    return render(request,'main/coursedetail.html',asetrack)
+def video5(request,id):
+    asetrack = {}
+    asetrack['course'] = Course.objects.get(pk=id)
+    course=Course.objects.get(pk=id)
+    asetrack['key']=CourseStudents.objects.filter(course=course,student=request.user)
+    c= CourseStudents.objects.get(course=course,student=request.user)
+    c.setv5()
+    if c.v1==True:
+        asetrack['c1']=True
+    if c.v2==True:
+        asetrack['c2']=True
+    if c.v3==True:
+        asetrack['c3']=True
+    if c.v4==True:
+        asetrack['c4']=True
+    if c.v5==True:
+        asetrack['c5']=True
+    asetrack['percentage']=c.getscore()
+    score=c.getscore()
+    if score==100:
+        asetrack['completed']=True
+    return render(request,'main/coursedetail.html',asetrack)
+
 def contact(request):
 	return render(request,'main/contact.html')
 	
@@ -77,10 +276,6 @@ def get_courses():
         print("Ad server not running/connecting")
         return {}
 
-def coursepage(request):
-    asetrack = {}
-    asetrack['advts'] = get_courses()
-    return render(request, "main/course.html", asetrack)
 
 def get_products():
     try:
@@ -89,6 +284,130 @@ def get_products():
     except RequestException:
         print("Ad server not running/connecting")
         return {}
+
+def coursepage(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Photography']
+    keyValList2 = ['Musical Instruments']
+    keyValList3 = ['Dance']
+    keyValList4 = ['Painting']
+    expectedResult1 = [d for d in get_courses() if d['category'] in keyValList1]
+    expectedResult2 = [d for d in get_courses() if d['category'] in keyValList2]
+    expectedResult3 = [d for d in get_courses() if d['category'] in keyValList3]
+    expectedResult4 = [d for d in get_courses() if d['category'] in keyValList4]
+    asetrack['photos'] = expectedResult1
+    asetrack['music'] = expectedResult2
+    asetrack['dance'] = expectedResult3
+    asetrack['paints'] = expectedResult4
+    return render(request, "main/course.html", asetrack)
+@login_required
+def mycourses(request):
+    asetrack={}
+    courses=CourseStudents.objects.filter(student=request.user)
+    
+    asetrack['courses']=courses
+    return render(request, "main/mycourses.html", asetrack)
+def allcoursepage(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    
+    return render(request, "main/allcourses.html", asetrack)
+def photography(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Photography']
+    expectedResult1 = [d for d in get_courses() if d['category'] in keyValList1]
+    asetrack['photos'] = expectedResult1
+    return render(request, "main/photography.html", asetrack)
+    
+def music(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Musical Instruments']
+    expectedResult1 = [d for d in get_courses() if d['category'] in keyValList1]
+    asetrack['music'] = expectedResult1
+    return render(request, "main/music.html", asetrack)
+
+def paint(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Painting']
+    expectedResult1 = [d for d in get_courses() if d['category'] in keyValList1]
+    asetrack['paint'] = expectedResult1
+    return render(request, "main/painting.html", asetrack)
+
+def dance(request):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Dance']
+    expectedResult1 = [d for d in get_courses() if d['category'] in keyValList1]
+    asetrack['dance'] = expectedResult1
+    return render(request, "main/dance.html", asetrack)
+
+
+
+def pricerange1(request,cat):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Photography']
+    keyValList2 = ['Musical Instruments']
+    keyValList3 = ['Painting']
+    keyValList4 = ['Dance']
+    if cat==1:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList1 and d['price']<1000]
+    elif cat==2:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList2 and d['price']<1000]
+    elif cat==3:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList3 and d['price']<1000]
+    elif cat==4:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList4 and d['price']<1000]
+    else:
+        expectedResult = [d for d in get_courses() if  d['price']<1000]
+    asetrack['needed'] = expectedResult
+    
+    return render(request, "main/price1.html", asetrack)
+def pricerange2(request,cat):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Photography']
+    keyValList2 = ['Musical Instruments']
+    keyValList3 = ['Painting']
+    keyValList4 = ['Dance']
+    if cat==1:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList1 and d['price']>999 and d['price']<5001]
+    elif cat==2:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList2 and d['price']>999 and d['price']<5001]
+    elif cat==3:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList3 and d['price']>999 and d['price']<5001]
+    elif cat==4:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList4 and d['price']>999 and d['price']<5001]
+    else:
+        expectedResult = [d for d in get_courses() if  d['price'] >999 and d['price']<5001]
+    asetrack['needed'] = expectedResult
+    
+    return render(request, "main/price2.html", asetrack)
+
+def pricerange3(request,cat):
+    asetrack = {}
+    asetrack['advts'] = get_courses()
+    keyValList1 = ['Photography']
+    keyValList2 = ['Musical Instruments']
+    keyValList3 = ['Painting']
+    keyValList4 = ['Dance']
+    if cat==1:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList1 and d['price']>5000]
+    elif cat==2:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList2 and d['price']>5000]
+    elif cat==3:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList3 and d['price']>5000]
+    elif cat==4:
+        expectedResult = [d for d in get_courses() if d['category'] in keyValList4 and d['price']>5000]
+    else:
+        expectedResult = [d for d in get_courses() if  d['price']>5000]
+    asetrack['needed'] = expectedResult
+    
+    return render(request, "main/price3.html", asetrack)
 
 def shop(request):
     asetrack = {}
