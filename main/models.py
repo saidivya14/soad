@@ -123,8 +123,10 @@ class CourseStudents(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default1.jpg', upload_to='profile_pics')
+    About = models.CharField(default='Tell us about your self',max_length=1000)
+    skills = models.CharField(default='Add your Skills',max_length=1000)
 
-    def __str__(self):
+    def _str_(self):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):

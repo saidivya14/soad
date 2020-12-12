@@ -1,26 +1,24 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+
 <div class="content-section" style="padding:50px 100px">
   <div class="media">
     <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" height="100px" width="100px" style="margin: 20px;" >
-    <div class="media-body" >
-      <h2 class="account-heading" style="margin: 20px;">{{user.username}}</h2>
-      <p class="text-secondary" style="margin: 20px;">{{user.email}}</p>
+      <div class="media-body" >
+          <h2 class="account-heading" style="margin: 20px;">{{user.username}}</h2>
+          <p class="text-secondary" style="margin: 20px;">{{user.email}}</p>
+          <p style="margin: 20px; color: mediumslateblue;">{{user.profile.About}}</p>
+          <p style="margin: 20px; color:mediumslateblue ;">Skills:                    {{user.profile.skills}}</p>
+
+      </div>
+          <div class="border-top pt-3">
+                  <li style="padding: 5px; color: white;"><a href="{% url 'edit_profile'%}">Edit Profile</a></li>
+                  <li style="padding: 5px; color: white;"><a href="{% url 'password_reset'%}">Password Reset</a></li>
+                  <li style="padding: 5px; color: white;"><a href="{% url 'mycourses' %}">My Courses</a></li>
+                  <li style="padding: 5px; color: white;"><a href="{% url 'myorders' %}">My orders</a></li>
+          </div>
     </div>
-    
-  </div>
-  <form method="POST" enctype="multipart/form-data" style="padding:10px"> 
-    {% csrf_token %}
-    <fieldset class="form-group" style="padding:10px">
-         <h2 class="border-bottom mb-4">Profile Info </h2>
-         {{ u_form|crispy}}
-         {{ p_form|crispy}}
-    </fieldset>
-    <div class="form-group">
-          <button class="btn btn-outline-info" type="submit" style ="background-color: #008CBA;">Update</button>
-    </div>
-</form>
 </div>
 
 {% endblock content %}

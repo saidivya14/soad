@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('orders/',include('orders.urls')),
     path('profile/',main_views.profile,name='profile'),
+    path('edit_profile/', main_views.edit_profile, name='edit_profile'),
     path('shop', main_views.shop, name="shop"),
     path('mycourses', main_views.mycourses, name="mycourses"),
     path('product/<int:id>', main_views.single_product, name='shopitem'),
