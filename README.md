@@ -4,3 +4,18 @@
               Frontend:HTML, CSS, JS, BootStrap
               Backend:Django rest
               Database:MangoDB
+              
+ Services Consumed:
+    collobrated shops can provide their products through api
+    collobrated organizations can provide their courses through api
+
+ Services Exposed:
+    logistics can pick order by checking order api
+    logistics can change status,location in api where it is displayed in tracking part
+    
+Group Members(25):
+    G.Sai Divya
+    K.Keerthana
+    Ch.Saishma
+    V.Amrutha
+    R.Bavani
