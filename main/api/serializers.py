@@ -6,7 +6,7 @@ from orders.models import Order,OrderItem,OrderUpdate
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['url','id','title','price','image','category','difficulty','description','organisation','instructor','noofweeks']
+        fields = ['url','id','title','price','image','category','difficulty','description','organisation','instructor','noofweeks','video1','d1','video2','d2','video3','d3','video4','d4','video5','d5']
         lookup_field = "id"
 
 class ProductSerializer(serializers.ModelSerializer):
