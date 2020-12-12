@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.conf.urls import url
 from . import views
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
     path('success', views.successMsg, name="success"),
     path('certi/<int:id>/', views.certi, name="certi"),
     path('certid/<int:id>/', views.certid, name="certid"),
+    url(r'^results-shop/$',views.search_shop,name='search_shop'),
 ]

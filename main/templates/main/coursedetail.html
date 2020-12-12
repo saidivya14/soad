@@ -114,17 +114,17 @@
     {% endif %}
 
     <div style="margin: 50px;">
-    <h2>WEEK1</h2>
-    <div class="row">
+    <h2>WEEK 1</h2>
+    <div class="row" style="padding:20px">
       <div class="column">
-        <video width="500" height="240" controls>
+        <video width="700" height="240" controls>
           <source src="{{course.video1.url}}" type="video/mp4">
          
         </video>
       </div>
-      <div class="column">
-        <h4 style="margin-left: 300px;">DESCRIPTION</h4>
-        <h5 style="margin-left: 300px;width: 300px;">{{course.d1}}</h5>
+      <div class="column" style="padding:100px;">
+        <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+        <h5 style="margin-left: 400px;width: 300px;">{{course.d1}}</h5>
       </div>
       
     </div>
@@ -134,41 +134,69 @@
       {%else%}
       <a href="{% url 'v1' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
       {% endif %}
-      <h2>WEEK2</h2>
-      <video width="500" height="240" controls>
-        <source src="{{course.video2.url}}" type="video/mp4">
-       
-      </video>
+      <h2 style="padding:20px;">WEEK 2</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video2.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d2}}</h5>
+        </div>
+      </div>
       {% if c2%}
       <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
       {%else%}
       <a href="{% url 'v2' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
       {% endif %}
-      <h2>WEEK3</h2>
-      <video width="500" height="240" controls>
-        <source src="{{course.video3.url}}" type="video/mp4">
-       
-      </video>
+      <h2 style="padding:20px;">WEEK 3</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video3.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d3}}</h5>
+        </div>
+      </div>
       {% if c3%}
       <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
       {%else%}
-      <a href="{% url 'v3' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
+      <a href="{% url 'v3' course.id %}" class="button" style="vertical-align:middle;"><span>MARK AS COMPLETED </span></a>
       {% endif %}
-      <h2>WEEK4</h2>
-      <video width="500" height="240" controls>
-        <source src="{{course.video4.url}}" type="video/mp4">
-       
-      </video>
+      <h2 style="padding:20px;">WEEK 4</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video4.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d4}}</h5>
+        </div>
+      </div>
       {% if c4%}
       <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
       {%else%}
       <a href="{% url 'v4' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
       {% endif %}
-      <h2>WEEK5</h2>
-      <video width="500" height="240" controls>
-        <source src="{{course.video5.url}}" type="video/mp4">
-       
-      </video>
+      <h2 style="padding:20px;">WEEK 5</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video5.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d5}}</h5>
+        </div>
+      </div>
       {% if c5%}
       <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
       {%else%}

@@ -11,9 +11,11 @@ from django.template.loader import get_template
 from django.template import Context
 from django.contrib.auth import logout
 from main.models import Product,Wishlist,Course,CourseStudents
+from orders.models import Order,OrderItem,OrderUpdate
 from .forms import UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.models import User
 import requests
+from django.db.models import Q
 from requests.exceptions import RequestException
 from django.core.paginator import Paginator
 from cart.forms import CartAddProductForm
@@ -21,7 +23,7 @@ import stripe
 from django.urls import reverse
 from cart.cart import Cart
 stripe.api_key = "sk_test_51HqIOnLC1dFeExGNo52wPrsiZrIqvMfDefLTv1Um1jDodhCZwocdMhybjWAME6BsKnpuQbxhMU1H6dntx4bYbT2k00PsDY29ie"
-from django_xhtml2pdf.utils import generate_pdf
+from django_xhtml2pdf.utils import generate_pdf   
 
 # Create your views here.
 def stripecheck(request,id):
@@ -67,12 +69,32 @@ def certi(request,id):
 def successMsg(request):
     return render(request, 'main/success.html')
 
+def search_shop(request):
+    query=request.GET.get('q2')
+    if query:
+        posts = Product.objects.all()
+        results=posts.filter(Q(title__icontains=query)|Q(category__icontains=query))
+    else:
+        results=Product.objects.all()
+    
+    paginator = Paginator(results,6)
+    page = request.GET.get('page')
+    results = paginator.get_page(page)
+    context={
+        'items' : results
+    }
+    return render(request,'main/search_shop.html',context)
 
 def home(request):
-	return render(request,'main/home.html')
+    return render(request,'main/home.html')
 
 def tracking(request):
-	return render(request,'main/tracking.html')
+    if request.method == 'POST':
+        orderid = request.POST['order']
+        order = Order.objects.get(pk=orderid)
+        ordering = OrderUpdate.objects.filter(order=order).first()
+        return render(request,'main/tracking.html',{'ordering':ordering})
+    return render(request,'main/tracking.html')
 
 def add_to_wishlist(request,id):
     product = Product.objects.get(pk=id)
@@ -261,10 +283,10 @@ def video5(request,id):
     return render(request,'main/coursedetail.html',asetrack)
 
 def contact(request):
-	return render(request,'main/contact.html')
-	
+    return render(request,'main/contact.html')
+    
 def about(request):
-	return render(request,'main/about.html')
+    return render(request,'main/about.html')
 
 def get_courses():
     try:
@@ -306,6 +328,7 @@ def mycourses(request):
     
     asetrack['courses']=courses
     return render(request, "main/mycourses.html", asetrack)
+    
 def allcoursepage(request):
     asetrack = {}
     asetrack['advts'] = get_courses()
@@ -457,20 +480,20 @@ def Login(request):
 # Create your views here.
 @login_required
 def profile(request):
-	if request.method== 'POST':
-		u_form=UserUpdateForm(request.POST,instance=request.user)
-		p_form=ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
-		if u_form.is_valid() and p_form.is_valid():
-			u_form.save()
-			p_form.save()
-			messages.success(request,f'Your account is updated ')
-			return redirect('profile')
-	else:
-		u_form=UserUpdateForm(instance=request.user)
-		p_form=ProfileUpdateForm(instance=request.user.profile)
-	context={
-		'u_form' :u_form,
-		'p_form' :p_form
-		
-	}
-	return render(request,'main/profile.html',context)
+    if request.method== 'POST':
+        u_form=UserUpdateForm(request.POST,instance=request.user)
+        p_form=ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request,f'Your account is updated ')
+            return redirect('profile')
+    else:
+        u_form=UserUpdateForm(instance=request.user)
+        p_form=ProfileUpdateForm(instance=request.user.profile)
+    context={
+        'u_form' :u_form,
+        'p_form' :p_form
+        
+    }
+    return render(request,'main/profile.html',context)

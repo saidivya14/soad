@@ -1,5 +1,6 @@
 from django.db import models
 from main.models import Product
+from django.contrib.auth.models import User
 # Create your models here.
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
@@ -10,7 +11,6 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    #paid = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-created',)
@@ -33,3 +33,16 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return int(float(self.price * self.quantity))
+
+class OrderUpdate(models.Model):
+    CATEGORY = (
+        ('Packed', 'Packed'),
+        ('Shipped', 'Shipped'),
+        ('In-Transit', 'In-Transit'),
+        ('Out for delivery', 'Out for delivery'),
+    )
+    update_desc=models.CharField(max_length=300, choices=CATEGORY,default="Packed")
+    order = models.ForeignKey(Order,on_delete=models.CASCADE)
+    update_id= models.AutoField(primary_key=True)
+    place = models.CharField(max_length=5000)
+    logistics_name = models.CharField(max_length=5000)

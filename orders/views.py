@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
-from .models import OrderItem,Order
+from .models import OrderItem,Order,OrderUpdate
 from .forms import OrderCreateForm
 from django.urls import reverse
 from cart.cart import Cart
 from django.views.decorators.csrf import csrf_exempt 
 import stripe
+from django.contrib.auth.models import User
 stripe.api_key = "sk_test_51HqIOnLC1dFeExGNo52wPrsiZrIqvMfDefLTv1Um1jDodhCZwocdMhybjWAME6BsKnpuQbxhMU1H6dntx4bYbT2k00PsDY29ie"
 app_name = "orders"
 # Create your views here.
@@ -46,6 +47,7 @@ def scharge(request,id):
             description="shop Payment"
 
         )
+    OrderUpdate.objects.create(order=order,username=request.user)
     return redirect(reverse('ssuccess', args=[amount]))
 
 
