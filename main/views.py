@@ -438,6 +438,33 @@ def shop(request):
     asetrack['items'] = itemlist
     return render(request, "main/shop.html", asetrack)
 
+def shop1(request):
+    asetrack = {}
+    itemlist=[d for d in get_products() if int(float(d['price']))<1000 ]
+    paginator = Paginator(itemlist,9)
+    page = request.GET.get('page')
+    itemlist = paginator.get_page(page)
+    asetrack['items'] = itemlist
+    return render(request, "main/shop.html", asetrack)
+
+def shop2(request):
+    asetrack = {}
+    itemlist=[d for d in get_products() if int(float(d['price'])) >1000 or int(float(d['price']))<10000 or int(float(d['price'])) ==1000]
+    paginator = Paginator(itemlist,9)
+    page = request.GET.get('page')
+    itemlist = paginator.get_page(page)
+    asetrack['items'] = itemlist
+    return render(request, "main/shop.html", asetrack)
+
+def shop3(request):
+    asetrack = {}
+    itemlist=[d for d in get_products() if int(float(d['price'])) >10000 or int(float(d['price'])) == 10000]
+    paginator = Paginator(itemlist,9)
+    page = request.GET.get('page')
+    itemlist = paginator.get_page(page)
+    asetrack['items'] = itemlist
+    return render(request, "main/shop.html", asetrack)
+
 def logout_view(request):
     logout(request)
     return redirect('home')

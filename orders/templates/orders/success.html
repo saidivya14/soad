@@ -2,14 +2,16 @@
 {% load static %}
 {% block content %}
     <body>
-        <div id="box">
+        <div id="box" style="padding:10px 100px">
             <h3>Your payment is successful </h3>
         </div>
+        <div style="padding:10px 100px">
             <h5>Thank You</h5>   
             <h5>Your Order has been successfully placed.</h5>
-        <div>
+        </div>
+        <div style="padding:10px 100px">
             <p class="text-left">
-                <a href="{% url 'shop' %}" class="btn btn-default">Continue Shopping</a>
+                <a href="{% url 'shop' %}" class="btn btn_3 button-contactForm">Continue Shopping</a>
             </p>
         </div>
     </body>

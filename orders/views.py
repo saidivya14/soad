@@ -47,7 +47,7 @@ def scharge(request,id):
             description="shop Payment"
 
         )
-    OrderUpdate.objects.create(order=order,username=request.user)
+    OrderUpdate.objects.create(order=order)
     return redirect(reverse('ssuccess', args=[amount]))
 
 
