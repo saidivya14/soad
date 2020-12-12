@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>EchoLearn</title>
+        <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'main/css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'main/css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'main/css/about.css' %}">
+        <!-- message here -->
+
+          {% if messages %}
+          {% for message in messages %}
+
+          <script>
+            alert("{{ message }}");
+          </script>
+
+          {% endfor %}
+          {% endif %}
+
+</head>
+<body>
+    <!--::header part start::-->
+    <header class="main_menu home_menu">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-11">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"><h1 style="color:black;">
+                            <span style="color:red;">E</span><span style="color:blue;">CHO</span><span style="color:red;">L</span><span style="color:blue;">EARN</span></h1></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'about' %}">About</a> 
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'shop' %}">Shop</a> 
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'courses' %}">Courses</a> 
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'contact' %}">Contact</a> 
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'mycourses' %}">My Courses</a> 
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="hearer_icon d-flex">
+                            {% if user.is_authenticated %}
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="{% url 'profile'%}"><span class="ti-user"></span></a>
+                                </li>
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="#"><span class="ti-heart" ></span></a>
+                                </li>   
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="{% url 'cart:cart_detail' %}"><span class="ti-shopping-cart"></span></a>
+                                </li>
+                                <li style="list-style-type: none">
+                                    <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+                                </li>  
+                            {% else %}
+                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'register' %}">Sign up</a></li>
+                                <li style="list-style-type: none"><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header part end-->
+
+    {% block content %}{% endblock %}
+
+    <!--::footer_part start::-->
+    <footer class="footer-section" style="background:black;padding: 50px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+              <div class="footer-left">
+                  <div class="footer-logo" style="padding: 10px">
+                      <a href="#"><h1 style="color:white;"><span style="color:red;">ECHOLEARN</span></h1></a>
+                  </div>
+                  <ul style="color:white;">
+                      <li>630 Gnan Marg, Sri City, Satyavedu Mandal, Chittor dist, Andhra Pradesh, India</li>
+                      <li>Phone: +91 9381487445</li>
+                      <li>Email: orionwebsite123@gmail.com</li>
+                  </ul>
+              </div>
+          </div>
+            <div class="col-lg-2 offset-lg-1">
+                <div class="footer-widget">
+                    <h5 style="padding: 5px;color:white;font-size: 25px">Information</h5>
+                    <ul>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'about' %}">About Us</a></li>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'profile' %}">Profile</a></li>
+                        <li style="padding: 5px; color:white;"><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="footer-widget offset-lg-3">
+                    <h5 style="padding: 5px;color:white;font-size: 22px">My Account</h5>
+                    <ul style="color:white;">
+                        <li style="padding: 5px; color: white;"><a href="#">My Courses</a></li>
+                        <li style="padding: 5px; color: white;"><a href="#">My Cart</a></li>
+                        <li style="padding: 5px; color: white;"><a href="#">My wishlist</a></li>
+                        <li style="padding: 5px; color: white;"><a href="#">My orders</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1">
+                <div class="footer-widget">
+                    <h5 style="padding: 5px;color:white;font-size: 25px">Our services</h5>
+                    <ul style="color:white;">
+                        <li style="padding-bottom: 10px;">Free Shipping</li>
+                        <li style="padding-bottom: 10px;">Free Returns</li>
+                        <li style="padding-bottom: 10px;">Customer Support</li>
+                        <li style="padding-bottom: 10px;">100% Verification</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </div>
+    </footer>
+    <!--::footer_part end::-->
+    <script src="{% static 'main/js/jquery-1.12.1.min.js' %}"></script>
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'main/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'main/js/custom.js' %}"></script>
+    <script src="{% static 'main/script.js' %}"></script>
+</body>
+</html>

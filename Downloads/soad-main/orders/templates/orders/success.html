@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+    <body>
+        <div id="box">
+            <h3>Your payment is successful </h3>
+        </div>
+            <h5>Thank You</h5>   
+            <h5>Your Order has been successfully placed.</h5>
+        <div>
+            <p class="text-left">
+                <a href="{% url 'shop' %}" class="btn btn-default">Continue Shopping</a>
+            </p>
+        </div>
+    </body>
+{% endblock content %}

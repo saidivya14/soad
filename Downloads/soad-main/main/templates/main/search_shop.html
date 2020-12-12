@@ -1,0 +1,200 @@
+{% extends "main/base.html" %}
+{% block content %}
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Home / Shop</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================Category Product Area =================-->
+<section class="cat_product_area section_padding" style="padding: 100px;padding-bottom: 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
+                        <div class="l_w_title">
+                            <h3>Browse Categories</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                <li>
+                                    <a href="#">Photography</a>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#Electronics" class=" d-flex justify-content-between">
+                                        Musical Instruments
+                                        <div class="right ti-plus"></div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#Electronics">Guitar</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Piano</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Snaredrum</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Trumpet</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Violin</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Sitar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Cooking</a>
+                                </li>
+                                <li>
+                                    <a href="#">Beverages</a>
+                                </li>
+                                <li>
+                                    <a href="#">Home and Cleaning</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+
+                    
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product_top_bar d-flex justify-content-between align-items-center">
+                            <div class="single_product_menu product_bar_item">
+                                <h2>Shop</h2>
+                            </div>
+                            <div class="row" style="padding:50px;">
+                              <div class="col">
+                                  <div class="dropdown mr-1 ml-md-auto">
+                                    <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding:10px 45px">
+                                    Price range
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <a class="dropdown-item" href="#">Rs.0 to Rs.10000</a>
+                                      <a class="dropdown-item" href="#">Rs.10000 to Rs.1Lakh</a>
+                                      <a class="dropdown-item" href="#">Rs.1Lakh to Rs.10Lakh</a>
+                                    </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="search-container">
+                                 <form method="GET" action="{% url 'search_shop' %}" >
+                                    <label class="sr-only" for="inlineFormInputGroupUsername">Search</label>
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text"><span class="ti-search"></span></div>
+                                      </div>
+                                      <input type="text" name="q2" value="{{request.GET.q2}}" id="inlineFormInputGroupUsername" class="form-control border-0" placeholder="Search" style="background: lightblue;">
+                                    </div>
+                                </form>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="d-flex">
+                                  <div class="dropdown mr-1 ml-md-auto">
+                                    <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding:10px 40px;">
+                                    Category
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Bongodrum">Bongodrum</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Conga">Conga</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Doublebass">Doublebass</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Guitar">Guitar</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Piano">Piano</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Sitar">Sitar</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Snare_drum">Snare_drum</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Trumpet">Trumpet</a>
+                                      <a class="dropdown-item" href="http://localhost:8000/results-shop/?q2=Violin">Violin</a>
+                                    </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if items %}
+						<div class=shop1 style="width: 100%;  height: 900px; padding: 50px;  padding-top:0px; margin: 20px;">
+						  <div class="row">
+						    {% for post in items %}
+						    	<div class="col-lg-4 col-sm-6">
+			                        <div class="single_category_product">
+			                            <div class="single_category_img">
+			                                <img src="../../media/{{post.image}}" style="width:250px;height:250px;"/>
+			                                <div class="category_social_icon">
+			                                    <ul>
+			                                        <li><a href="#"><i class="ti-heart"></i></a></li>
+			                                        <li><a href="#"><i class="ti-bag"></i></a></li>
+			                                    </ul>
+			                                </div>
+			                                <div class="category_product_text">
+			                                    <a href="{% url 'shopitem' post.id %}"><h5>{{post.title}}</h5></a>
+			                                    <p>Rs.{{post.price}}</p>
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
+						    {% endfor %}
+						  </div>
+						  <div class=shop1 style="width: 100%;  height: 100px; padding: 30px;  margin: 5px;">
+						    <div class="pagination" style="width: 100%;  height: 60px;">
+						    
+						    {% if items.has_previous %}
+						      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;"  href="?page=1">First</a>
+						      <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{items.previous_page_number}}">Previous</a>
+						    {% endif %}
+						    
+						    {% for num in items.paginator.page_range %}
+						      {% if items.number == num %}
+						        <a class="btn btn-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a>  
+						      {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}  
+						        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ num }}">{{ num }}</a> 
+						      {% endif %}
+						    {% endfor %}
+
+						      {% if items.has_next %}
+						        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.next_page_number}}">Next</a>
+						        <a class="btn btn-outline-info mb-4" style ="background-color: #008CBA;" href="?page={{ items.paginator.num_pages}}">Last</a>
+						      {% endif %}
+
+						      </div> 
+
+						  </div>
+						</div>
+						{% else %}
+						<div class=con style="height:240px;padding-top: 30px">
+						    <div class="alert alert-info">
+						        Oops! There are no Products available currently.
+						    </div>
+						 </div>
+
+						{% endif %}
+					</div>
+                </div>
+            </div>
+        </div>
+</section>
+<!--================End Category Product Area =================-->
+
+{% endblock content %}

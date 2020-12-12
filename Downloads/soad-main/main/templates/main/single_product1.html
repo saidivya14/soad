@@ -1,0 +1,100 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>Home/Shop/{{products.title}}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================Single Product Area =================-->
+  <div class="product_image_area section_padding" style="padding: 50px;">
+    <div class="container">
+      <div class="row s_product_inner">
+        <div class="col-lg-5">
+          <div class="product_slider_img">
+            <div id="vertical">
+              <div>
+                <img src="../../media/{{products.image}}" style="width:450px;height:450px;"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 offset-lg-1">
+          <div class="s_product_text">
+            <h3>{{products.title}}</h3>
+            <h2>{{products.price}}</h2>
+            <ul class="list">
+              <li>
+                <a class="active" href="#">
+                  <span>Category</span> : {{products.category}}</a>
+              </li>
+              <li>
+                <a href="#"> <span>Availibility</span> : In Stock</a>
+              </li>
+            </ul>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            </p>
+              <div class="add_to_cart">
+                  <form action="{% url 'cart:cart_add' products.id %}" method="post"> 
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    <input type="submit" value="Add to cart">
+                  </form>
+                    <a href="{% url 'delete-from-wishlist' products.id %}"><button class="btn_3 button-contactForm"><i class="ti-heart forhover" style="color:white;padding-right: 3px;"></i>Wishlisted</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--================End Single Product Area =================-->
+  <!-- free shipping here -->
+    <section class="shipping_details section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_shopping_details">
+                        <img src="{% static 'main/img/icon/icon_1.png' %}" alt="">
+                        <h4>Free shipping</h4>
+                        <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_shopping_details">
+                        <img src="{% static 'main/img/icon/icon_2.png' %}" alt="">
+                        <h4>Free shipping</h4>
+                        <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_shopping_details">
+                        <img src="{% static 'main/img/icon/icon_3.png' %}" alt="">
+                        <h4>Free shipping</h4>
+                        <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_shopping_details">
+                        <img src="{% static 'main/img/icon/icon_4.png' %}" alt="">
+                        <h4>Free shipping</h4>
+                        <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- free shipping end -->
+{% endblock content %}

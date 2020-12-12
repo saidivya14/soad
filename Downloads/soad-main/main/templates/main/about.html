@@ -1,0 +1,121 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<br>
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Home / About</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<center><h2 style="margin: 50px">OUR SERVICES</h2></center>
+<br>
+<div class="row" style="padding-left: 50px">
+  <div class="column">
+    <div class="card">
+      <img src="{% static 'main/img/learn.jpg' %}"  style="width:100%">
+      <div class="container">
+          <br>
+        <h2>&nbsp&nbsp&nbsp&nbspLearn online</h2>
+        
+        <p>We provide an option for the institutes to collaborate with us and the courses selected by institute will be available for free for all the students of the Institute. </p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{% static 'main/img/sell.jpg' %}"  style="width:100%">
+      <div class="container">
+          <br>
+        <h2>&nbsp&nbsp&nbsp&nbspSell products </h2>
+        
+        <p>We provide an option for different brands to collaborate with us and sell their products in our website.You can sell your products to shops and individuals using our website.</p>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="{% static 'main/img/shop.jpg' %}"  style="width:100%;">
+      <div class="container">
+          <br>
+        <h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspBuy </h2>
+       
+        <p>We provide an option to buy products from more than 100 brands from our website.Shops can collaborate with us and buy products in bulk from brands in our website.</p>
+      
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="{% static 'main/img/teach.png' %}"  style="width:100%">
+      <div class="container">
+          <br>
+        <h2>&nbsp&nbsp&nbsp&nbspTeach online</h2>
+        
+        <p>We provide an option for various Institues across the country to collaborate with us and provide different courses and instructors to students learning from our website.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<section style="font-size:16px; padding: 20px 150px">
+  <div>
+
+    <center><h2 style="margin: 50px">ABOUT US</h2></center>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+    <center><button class="btn_3 button-contactForm">Contact with us</button></center>
+  </div>
+</section>
+<hr>
+<center><h2>ONLINE LEARNING MADE EASY</h2></center>
+<div style="height: 200px;margin-top: 50px;margin-left: 50px">
+    <div style="width: 500px">
+    <h2 style="float: left;">Non Technical Courses</h2>
+    <p style="float: left;">
+        Learn something new
+
+Every course on Coursera is taught by top instructors from world-class universities and companies, so you can learn something new anytime, anywhere. Hundreds of free courses give you access to on-demand video lectures, homework exercises, and community discussion forums. Paid courses provide additional quizzes and projects as well as a shareable Course Certificate upon completion.
+    </p>
+    </div>
+    <img src="{% static 'main/img/nontech.jpg' %}" style="width:200px;height:180px;float: right;margin-right: 70px;">
+</div>
+
+<div style="height: 200px;margin-top: 50px;margin-left: 50px">
+    <div style="width: 500px">
+    <h2 style="float: left;">Sharable Certificates</h2>
+    <p style="float: left;">
+        Get job-ready for an in-demand career
+
+Whether you’re looking to start a new career or change your current one, Professional Certificates on our website help you become job-ready. Learn at your own pace from top universities, apply your new skills to hands-on projects that showcase your expertise to potential employers, unlock access to career support resources, and earn a career credential to kickstart your new career.
+    </p>
+    </div>
+    <img src="{% static 'main/img/certificate.jpg' %}"  style="width:200px;height:180px;float: right;margin-right: 70px">
+</div>
+
+<br><br><br><br>
+<hr>
+<p>
+<center><h2>SHOP ONLINE WITH COMPLETE CONVENIENCE</h2></center>
+Reason why Myntra is the best of all online stores is the complete convenience that it offers. You can view your favourite brands with price options for different products in one place. A user-friendly interface will guide you through your selection process. Comprehensive size charts, product information and high-resolution images help you make the best buying decisions. You also have the freedom to choose your payment options, be it card or cash-on-delivery.
+
+Enjoy the hassle-free experience as you shop comfortably from your home or your workplace. 
+</p>
+<br>
+<center><button class="btn_3 button-contactForm">Shop now</button></center>
+<hr>
+<br>
+
+{% endblock content %}

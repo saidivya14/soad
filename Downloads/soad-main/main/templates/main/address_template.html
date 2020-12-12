@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<div class="site-section">
+	<div class="container">
+		<div class="row mb-5">
+					
+		<h4>Total: Rs.{{product.get_total_price}}</h4>
+		<hr>
+
+						
+		<div style="padding-left: 90px">
+                <h4>Shipping Address:</h4>
+                <ul style="color:black">
+                    <li>{{ name }},</li>
+                    <li>{{ street }},</li>
+                    <li>{{ city }},</li>
+                    <li>{{ pincode }},</li>
+                    <li>{{ phone }},</li>
+                    <li>{{ state }},</li>
+                    <li>{{ country }}.</li>
+                </ul>
+        </div>
+    </br>
+</br>
+        <div class="row" style="padding-left: 90px">
+        	<div class="col">
+        		<div class="form-group">
+              <a href="{% url 'shop' %}"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Cancel</button></a>
+            </div>
+        </div>
+            <div class="col">
+        		<div class="form-group">
+              <a href="#"><button class="btn btn-outline-info" style ="background-color: #008CBA;" type="submit">Proceed to Payment</button></a>
+            </div>
+        </div>
+        </div>
+    </div>
+	</div>
+</div>
+
+
+
+{% endblock content %}

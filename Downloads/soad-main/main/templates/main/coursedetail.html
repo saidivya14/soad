@@ -1,0 +1,266 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+  <!DOCTYPE html>
+  <html>
+  <head>
+      
+      <style>
+  .container {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  .bottom-left {
+    position: absolute;
+    bottom: 60px;
+    left: 38px;
+    font-size: medium;
+  }
+  .top-left {
+    position: absolute;
+    bottom: 100px;
+    left: 40px;
+    font-size: larger;
+  }
+  .top-right {
+    position: absolute;
+    bottom: 90px;
+    right: 250px;
+    font-size: larger;
+  }
+  .bottom-right {
+    position: absolute;
+    bottom: 60px;
+    right: 38px;
+    font-size: 300%;
+  }
+  div.c {
+    text-align: right;
+    display: grid;
+    font-size: medium;
+  } 
+  div.para {
+  
+      text-align: left;
+      font-size: 15px;
+      color: grey;
+  }
+  
+  .left{
+      display: flex;
+      flex-direction: row;
+  }
+  
+  .syllabus{
+      text-align: center;
+      font-size: medium;
+  }
+  .week{
+   
+  font-size: larger;
+  }
+  .save{
+      padding: 10px;
+  }
+  .programming{
+      text-align: left ;
+      color: grey;
+  }
+  
+  .flexcontainer{
+      flex-direction: left;
+      display: flex;
+  
+  }
+  .racha{
+      width: 66.66%;
+      padding: 50px;
+  }
+  .side{
+      padding:50px;
+  }
+  .side h6{
+      margin: 0px;
+      font-weight: 200;
+      color: grey;
+  }
+  .side h3{
+      margin-top: 20px;
+      margin-bottom: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+  }
+</style>
+  </head>
+  
+  <body>
+      
+    
+    {% if key %}
+    
+    <h1><center>{{course.title}}</center></h1>
+    <div class="container">
+     
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
+          {{percentage}}%
+        </div>
+      </div>
+    </div>
+    {% if completed%}
+    <a href="{% url 'certi' course.id%}"><center>Download Certificate</center></a>
+    {% endif %}
+
+    <div style="margin: 50px;">
+    <h2>WEEK 1</h2>
+    <div class="row" style="padding:20px">
+      <div class="column">
+        <video width="700" height="240" controls>
+          <source src="{{course.video1.url}}" type="video/mp4">
+         
+        </video>
+      </div>
+      <div class="column" style="padding:100px;">
+        <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+        <h5 style="margin-left: 400px;width: 300px;">{{course.d1}}</h5>
+      </div>
+      
+    </div>
+    
+      {% if c1%}
+      <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
+      {%else%}
+      <a href="{% url 'v1' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
+      {% endif %}
+      <h2 style="padding:20px;">WEEK 2</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video2.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d2}}</h5>
+        </div>
+      </div>
+      {% if c2%}
+      <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
+      {%else%}
+      <a href="{% url 'v2' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
+      {% endif %}
+      <h2 style="padding:20px;">WEEK 3</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video3.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d3}}</h5>
+        </div>
+      </div>
+      {% if c3%}
+      <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
+      {%else%}
+      <a href="{% url 'v3' course.id %}" class="button" style="vertical-align:middle;"><span>MARK AS COMPLETED </span></a>
+      {% endif %}
+      <h2 style="padding:20px;">WEEK 4</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video4.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d4}}</h5>
+        </div>
+      </div>
+      {% if c4%}
+      <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
+      {%else%}
+      <a href="{% url 'v4' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
+      {% endif %}
+      <h2 style="padding:20px;">WEEK 5</h2>
+      <div class="row" style="padding:20px">
+        <div class="column">
+          <video width="700" height="240" controls>
+            <source src="{{course.video5.url}}" type="video/mp4">
+          </video>
+        </div>
+        <div class="column" style="padding:100px;">
+          <h4 style="margin-left: 400px;">DESCRIPTION</h4>
+          <h5 style="margin-left: 400px;width: 300px;">{{course.d5}}</h5>
+        </div>
+      </div>
+      {% if c5%}
+      <a href="{% url 'coursedetail' course.id %}" class="button" style="vertical-align:middle;background-color: rgb(71, 146, 71);"><span>COMPLETED </span></a>
+      {%else%}
+      <a href="{% url 'v5' course.id %}" class="button" style="vertical-align:middle"><span>MARK AS COMPLETED </span></a>
+      {% endif %}
+      </div>
+    {%else%}
+    <div class="container">
+      <img src="../../media/{{ course.image }}" alt="Girl in a jacket" width="100%" height="400">
+      <div class="top-left"><b>5 Course specialization</b></div>
+      <div class="bottom-left"><b>GUITAR LESSONS</b></div>
+      <div class="top-right"><a href="{% url 'stripecheck' course.id %}"><button class="btn btn-outline-info" style="background-color: rgb(85, 175, 187);width: 100%;color: black;" type="submit">Enroll</button></a></div>
+
+      <div class="bottom-right"><h5>{{course.organisation}}</h5></div>
+      </div>
+      <div class="flexcontainer">
+          <div class="racha">
+     
+      
+      
+      <h2>About this Course</h2>
+      <div class ="para">
+          <p>{{course.description}}</p>
+      </div>
+      </div>
+      <div class="side">
+          <h3>High quality teaching</h3>
+          <h5>Taught by professional instructors</h5>
+          <h3>100% Online</h3>
+          <h5>Start instantly and learn at your own schedule.</h5>
+          <h3>Reasonable price</h3>
+          <h5>Course is open for lifetime.</h5>
+          
+          </div>
+      </div>
+        
+          <hr style="width:12;text-align:left;color: grey  ;height: 2px ; background-color:gray ;margin-left:0 ">
+          <div class ="down" style="padding-left:150px;padding-right: 150px;padding-bottom: 100px;">
+              <div class="empty">&nbsp;&nbsp;</div>
+              <div class="syllabus"><h1>Syllabus - What you will learn from this course</h1></div>
+              <div class="empty">&nbsp;&nbsp;</div>
+              <div class="week">Week 1:</div>
+              <h3 class="programming" style="padding-left: 100px;padding-top: 5px;padding-bottom: 5px;">{{course.d1}}</h3>
+              <hr>
+              <div class="week">Week 2:</div>
+              <h3 class="programming" style="padding-left: 100px;padding-top: 5px;padding-bottom: 5px;">{{course.d2}}</h3>
+              <hr>
+              <div class="week">Week 3:</div>
+              <h3 class="programming" style="padding-left: 100px;padding-top: 5px;padding-bottom: 5px;">{{course.d3}}</h3>
+              <hr>
+              <div class="week">Week 4:</div>
+              <h3 class="programming" style="padding-left: 100px;padding-top: 5px;padding-bottom: 5px;">{{course.d4}}</h3>
+              <hr>
+              <div class="week">Week 5:</div>
+              <h3 class="programming" style="padding-left: 100px;padding-top: 5px;padding-bottom: 5px;">{{course.d5}}</h3>
+      
+          </div>
+
+   </div>
+    {% endif %}
+</body>
+
+  
+  
+  </html>
+
+{% endblock content %}
