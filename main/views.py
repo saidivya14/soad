@@ -19,6 +19,7 @@ from django.core.paginator import Paginator
 from cart.forms import CartAddProductForm
 import stripe
 from django.urls import reverse
+from cart.cart import Cart
 stripe.api_key = "sk_test_51HqIOnLC1dFeExGNo52wPrsiZrIqvMfDefLTv1Um1jDodhCZwocdMhybjWAME6BsKnpuQbxhMU1H6dntx4bYbT2k00PsDY29ie"
 from django_xhtml2pdf.utils import generate_pdf
 
@@ -46,33 +47,26 @@ def charge(request,id):
             )
     CourseStudents.objects.create(course=product,student=request.user)
     return redirect(reverse('success'))
+    
 def certid(request,id):
     resp = HttpResponse(content_type='application/pdf')
-    
     asetrack = {}
     asetrack['user']=request.user
     asetrack['course'] = Course.objects.get(pk=id)
     result = generate_pdf('main/certid.html', file_object=resp,context=asetrack)
     return result
-    
-    
-    
-    return render(request,'main/certi.html',asetrack)
-def certi(request,id):
 
-    
-    
+    return render(request,'main/certi.html',asetrack)
+
+def certi(request,id):
     asetrack = {}
     asetrack['user']=request.user
     asetrack['course'] = Course.objects.get(pk=id)
-    
-    return render(request, 'main/certi.html',asetrack)
-    
-    
-    
     return render(request,'main/certi.html',asetrack)
+
 def successMsg(request):
     return render(request, 'main/success.html')
+
 
 def home(request):
 	return render(request,'main/home.html')
@@ -171,6 +165,7 @@ def video1(request,id):
     if score==100:
         asetrack['completed']=True
     return render(request,'main/coursedetail.html',asetrack)
+
 def video2(request,id):
     asetrack = {}
     asetrack['course'] = Course.objects.get(pk=id)
@@ -194,6 +189,7 @@ def video2(request,id):
     if score==100:
         asetrack['completed']=True
     return render(request,'main/coursedetail.html',asetrack)
+
 def video3(request,id):
     asetrack = {}
     asetrack['course'] = Course.objects.get(pk=id)
@@ -217,6 +213,7 @@ def video3(request,id):
     if score==100:
         asetrack['completed']=True
     return render(request,'main/coursedetail.html',asetrack)
+
 def video4(request,id):
     asetrack = {}
     asetrack['course'] = Course.objects.get(pk=id)
@@ -239,6 +236,7 @@ def video4(request,id):
     if score==100:
         asetrack['completed']=True
     return render(request,'main/coursedetail.html',asetrack)
+
 def video5(request,id):
     asetrack = {}
     asetrack['course'] = Course.objects.get(pk=id)
@@ -276,7 +274,6 @@ def get_courses():
         print("Ad server not running/connecting")
         return {}
 
-
 def get_products():
     try:
         ads = requests.get("http://localhost:8000/api/products")
@@ -301,6 +298,7 @@ def coursepage(request):
     asetrack['dance'] = expectedResult3
     asetrack['paints'] = expectedResult4
     return render(request, "main/course.html", asetrack)
+
 @login_required
 def mycourses(request):
     asetrack={}
@@ -345,8 +343,6 @@ def dance(request):
     asetrack['dance'] = expectedResult1
     return render(request, "main/dance.html", asetrack)
 
-
-
 def pricerange1(request,cat):
     asetrack = {}
     asetrack['advts'] = get_courses()
@@ -367,6 +363,7 @@ def pricerange1(request,cat):
     asetrack['needed'] = expectedResult
     
     return render(request, "main/price1.html", asetrack)
+
 def pricerange2(request,cat):
     asetrack = {}
     asetrack['advts'] = get_courses()

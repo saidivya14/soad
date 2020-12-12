@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'cart',
+    'orders',
     'main.apps.MainConfig',
     'crispy_forms',
     'django.contrib.admin',
