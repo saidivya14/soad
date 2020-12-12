@@ -69,7 +69,7 @@
                                     <a class="nav-link" href="{% url 'profile'%}"><span class="ti-user"></span></a>
                                 </li>
                                 <li style="list-style-type: none">
-                                    <a class="nav-link" href="#"><span class="ti-heart" ></span></a>
+                                    <a class="nav-link" href="{% url 'wishlist' %}"><span class="ti-heart" ></span></a>
                                 </li>   
                                 <li style="list-style-type: none">
                                     <a class="nav-link" href="{% url 'cart:cart_detail' %}"><span class="ti-shopping-cart"></span></a>
@@ -121,10 +121,10 @@
                 <div class="footer-widget offset-lg-3">
                     <h5 style="padding: 5px;color:white;font-size: 22px">My Account</h5>
                     <ul style="color:white;">
-                        <li style="padding: 5px; color: white;"><a href="#">My Courses</a></li>
-                        <li style="padding: 5px; color: white;"><a href="#">My Cart</a></li>
-                        <li style="padding: 5px; color: white;"><a href="#">My wishlist</a></li>
-                        <li style="padding: 5px; color: white;"><a href="#">My orders</a></li>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'mycourses' %}">My Courses</a></li>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'cart:cart_detail' %}">My Cart</a></li>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'wishlist' %}">My wishlist</a></li>
+                        <li style="padding: 5px; color: white;"><a href="{% url 'myorders' %}">My orders</a></li>
                     </ul>
                 </div>
             </div>

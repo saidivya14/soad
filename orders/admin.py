@@ -10,4 +10,5 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
 
 admin.site.register(Order,OrderAdmin) 
+admin.site.register(OrderItem) 
 admin.site.register(OrderUpdate) 

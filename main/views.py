@@ -88,6 +88,7 @@ def search_shop(request):
 def home(request):
     return render(request,'main/home.html')
 
+@login_required
 def tracking(request):
     if request.method == 'POST':
         orderid = request.POST['order']
@@ -96,6 +97,7 @@ def tracking(request):
         return render(request,'main/tracking.html',{'ordering':ordering})
     return render(request,'main/tracking.html')
 
+@login_required
 def add_to_wishlist(request,id):
     product = Product.objects.get(pk=id)
     ws = Wishlist.objects.filter(product=product).filter(username=request.user)
@@ -112,6 +114,7 @@ def add_to_wishlist(request,id):
     }
     return render(request,'main/my_wishlist.html',context)
 
+@login_required
 def delete_from_wishlist(request,id):
     product = Product.objects.get(pk=id)
     ws = Wishlist.objects.filter(product=product).filter(username=request.user)
@@ -125,7 +128,29 @@ def delete_from_wishlist(request,id):
     }
     return render(request,'main/my_wishlist.html',context)
 
+@login_required
+def mywishlist(request):
+    posts = Wishlist.objects.filter(username=request.user)
+    paginator = Paginator(posts,6)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context={
+        'posts' : posts
+    }
+    return render(request,'main/my_wishlist.html',context)
 
+@login_required
+def myorders(request):
+    posts = OrderItem.objects.filter(username=request.user)
+    paginator = Paginator(posts,6)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context={
+        'posts' : posts
+    }
+    return render(request,'main/myorders.html',context)
+
+@login_required
 def single_product(request,id):
     products = Product.objects.get(pk=id)
     cart_product_form = CartAddProductForm()
@@ -135,6 +160,7 @@ def single_product(request,id):
     else:
         return render(request,'main/single_product.html', {'products':products,'cart_product_form':cart_product_form})
 
+@login_required
 def coursedetail(request,id):
     asetrack = {}
     asetrack['course'] = Course.objects.get(pk=id)
@@ -163,6 +189,7 @@ def coursedetail(request,id):
         asetrack['c5']=True
       
     return render(request,'main/coursedetail.html',asetrack)
+
 def video1(request,id):
     asetrack = {}
     asetrack['course'] = Course.objects.get(pk=id)
