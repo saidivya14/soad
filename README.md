@@ -3,7 +3,7 @@ This is a service oriented website where organizations,shops/studios collabrate 
  TechStack: 
               Frontend:HTML, CSS, JS, BootStrap
               Backend:Django rest
-              Database:MangoDB
+              Database:MongoDB
               
 Services Consumed:
     collobrated shops can provide their products through api
